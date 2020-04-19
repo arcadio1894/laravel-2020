@@ -1,4 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.appLanding')
+
+@section('header-page')
+    <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image: url({{ asset('landing/images/bg_1.jpg')}})">
+        <div class="container">
+            <div class="row align-items-end justify-content-center text-center">
+                <div class="col-lg-7">
+                    <h2 class="mb-0">Registro</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('breadcrumns')
+    <div class="custom-breadcrumns border-bottom">
+        <div class="container">
+            <a href="{{ url('/') }}">Inicio</a>
+            <span class="mx-3 icon-keyboard_arrow_right"></span>
+            <span class="current">Registro</span>
+        </div>
+    </div>
+@endsection
 
 @section('content')
 <div class="container">
