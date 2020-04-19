@@ -2,10 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>Academics &mdash; Website by Colorlib</title>
+    <title>Academics &mdash; Website</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('landing/fonts/icomoon/style.css') }}">
@@ -167,7 +166,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-                    <p class="mb-4"><img src="images/logo.png" alt="Image" class="img-fluid"></p>
+                    <p class="mb-4"><img src="{{ asset('landing/images/logo.png') }}" alt="Image" class="img-fluid"></p>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nemo minima qui dolor, iusto iure.</p>
                     <p><a href="#">Learn More</a></p>
                 </div>

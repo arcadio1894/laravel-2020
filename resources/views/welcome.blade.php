@@ -2,10 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>Academics &mdash; Website by Colorlib</title>
+    <title>Academics &mdash; Website</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('landing/fonts/icomoon/style.css')}}">
@@ -26,8 +25,6 @@
     <link href="{{ asset('landing/css/jquery.mb.YTPlayer.min.css')}}" media="all" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="{{ asset('landing/css/style.css')}}">
-
-
 
 </head>
 
@@ -56,7 +53,7 @@
                 <div class="col-lg-3 text-right">
                     @if (Route::has('login'))
                         @auth
-                            <a class="small mr-3" href="{{ url('/home') }}">Intranet</a>
+                            <a class="small mr-3" href="{{ url('/home') }}">INTRANET: {{ Auth::user()->name }}</a>
                         @else
                             <a class="small mr-3" href="{{ route('login') }}"><span class="icon-unlock-alt"></span> Iniciar sesión</a>
 
@@ -217,7 +214,7 @@
                     <div class="owl-slide-3 owl-carousel">
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="images/course_1.jpg" alt="Image" class="img-fluid"></a>
+                                <a href="course-single.html"><img src="{{ asset('landing/images/course_1.jpg') }}" alt="Image" class="img-fluid"></a>
                                 <div class="price">$99.00</div>
                                 <div class="category"><h3>Mobile Application</h3></div>
                             </figure>
@@ -237,7 +234,7 @@
 
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="images/course_2.jpg" alt="Image" class="img-fluid"></a>
+                                <a href="course-single.html"><img src="{{ asset('landing/images/course_2.jpg') }}" alt="Image" class="img-fluid"></a>
                                 <div class="price">$99.00</div>
                                 <div class="category"><h3>Web Design</h3></div>
                             </figure>
@@ -257,7 +254,7 @@
 
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="images/course_3.jpg" alt="Image" class="img-fluid"></a>
+                                <a href="course-single.html"><img src="{{ asset('landing/images/course_3.jpg') }}" alt="Image" class="img-fluid"></a>
                                 <div class="price">$99.00</div>
                                 <div class="category"><h3>Arithmetic</h3></div>
                             </figure>
@@ -277,7 +274,7 @@
 
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="images/course_4.jpg" alt="Image" class="img-fluid"></a>
+                                <a href="course-single.html"><img src="{{ asset('landing/images/course_4.jpg') }}" alt="Image" class="img-fluid"></a>
                                 <div class="price">$99.00</div>
                                 <div class="category"><h3>Mobile Application</h3></div>
                             </figure>
@@ -297,7 +294,7 @@
 
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="images/course_5.jpg" alt="Image" class="img-fluid"></a>
+                                <a href="course-single.html"><img src="{{ asset('landing/images/course_5.jpg') }}" alt="Image" class="img-fluid"></a>
                                 <div class="price">$99.00</div>
                                 <div class="category"><h3>Web Design</h3></div>
                             </figure>
@@ -317,7 +314,7 @@
 
                         <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="images/course_6.jpg" alt="Image" class="img-fluid"></a>
+                                <a href="course-single.html"><img src="{{ asset('landing/images/course_6.jpg') }}" alt="Image" class="img-fluid"></a>
                                 <div class="price">$99.00</div>
                                 <div class="category"><h3>Mobile Application</h3></div>
                             </figure>
@@ -345,7 +342,7 @@
         </div>
     </div>
 
-    <div class="section-bg style-1" style="background-image: url({{ asset('landing/images/about_1.jpg')}});">
+    <div class="section-bg style-1" style="background-image: url({{ asset('landing/images/bg_1.jpg')}});">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
@@ -378,7 +375,7 @@
 
                 <div class="ftco-testimonial-1">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-                        <img src="images/person_1.jpg" alt="Image" class="img-fluid mr-3">
+                        <img src="{{ asset('landing/images/person_1.jpg') }}" alt="Image" class="img-fluid mr-3">
                         <div>
                             <h3>Allison Holmes</h3>
                             <span>Designer</span>
@@ -391,7 +388,7 @@
 
                 <div class="ftco-testimonial-1">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-                        <img src="images/person_2.jpg" alt="Image" class="img-fluid mr-3">
+                        <img src="{{ asset('landing/images/person_2.jpg') }}" alt="Image" class="img-fluid mr-3">
                         <div>
                             <h3>Allison Holmes</h3>
                             <span>Designer</span>
@@ -404,7 +401,7 @@
 
                 <div class="ftco-testimonial-1">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-                        <img src="images/person_4.jpg" alt="Image" class="img-fluid mr-3">
+                        <img src="{{ asset('landing/images/person_4.jpg') }}" alt="Image" class="img-fluid mr-3">
                         <div>
                             <h3>Allison Holmes</h3>
                             <span>Designer</span>
@@ -417,7 +414,7 @@
 
                 <div class="ftco-testimonial-1">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-                        <img src="images/person_3.jpg" alt="Image" class="img-fluid mr-3">
+                        <img src="{{ asset('landing/images/person_3.jpg') }}" alt="Image" class="img-fluid mr-3">
                         <div>
                             <h3>Allison Holmes</h3>
                             <span>Designer</span>
@@ -430,7 +427,7 @@
 
                 <div class="ftco-testimonial-1">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-                        <img src="images/person_2.jpg" alt="Image" class="img-fluid mr-3">
+                        <img src="{{ asset('landing/images/person_2.jpg') }}" alt="Image" class="img-fluid mr-3">
                         <div>
                             <h3>Allison Holmes</h3>
                             <span>Designer</span>
@@ -443,7 +440,7 @@
 
                 <div class="ftco-testimonial-1">
                     <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-                        <img src="images/person_4.jpg" alt="Image" class="img-fluid mr-3">
+                        <img src="{{ asset('landing/images/person_4.jpg') }}" alt="Image" class="img-fluid mr-3">
                         <div>
                             <h3>Allison Holmes</h3>
                             <span>Designer</span>
