@@ -82,6 +82,13 @@ Route::middleware('auth')->group(function () {
         Route::get('users/{user}/edit', 'UserController@edit')->name('edit')
             ->middleware('permission:users.edit');
 
+        // TODO: Revisar estas rutas
+        Route::post('users/store', 'UserController@store')->name('store')
+            ->middleware('permission:users.index');
+
+        Route::get('users/create', 'UserController@create')->name('create')
+            ->middleware('permission:users.create');
+
     });
 
 });

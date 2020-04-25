@@ -152,7 +152,7 @@
 
                     @can('users.index')
                     <li class="">
-                        <a href="typography.html">
+                        <a href="{{ route('users.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
                         </a>
@@ -163,7 +163,7 @@
 
                     @can('users.edit')
                     <li class="">
-                        <a href="elements.html">
+                        <a href="{{ route('users.create') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Crear
                         </a>
@@ -172,111 +172,50 @@
                     </li>
                     @endcan
 
+                </ul>
+            </li>
+            @endcan
+
+            @can('roles.index')
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-list"></i>
+                    <span class="menu-text"> Módulo Roles </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    @can('roles.index')
                     <li class="">
-                        <a href="buttons.html">
+                        <a href="{{ route('roles.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            Buttons &amp; Icons
+                            Visualizar
                         </a>
 
                         <b class="arrow"></b>
                     </li>
-
+                    @endcan
+                    @can('roles.create')
                     <li class="">
-                        <a href="content-slider.html">
+                        <a href="{{ route('roles.create') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            Content Sliders
+                            Crear
                         </a>
 
                         <b class="arrow"></b>
                     </li>
-
-                    <li class="">
-                        <a href="treeview.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Treeview
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="jquery-ui.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            jQuery UI
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="nestable-list.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Nestable Lists
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="menu-icon fa fa-caret-right"></i>
-
-                            Three Level Menu
-                            <b class="arrow fa fa-angle-down"></b>
-                        </a>
-
-                        <b class="arrow"></b>
-
-                        <ul class="submenu">
-                            <li class="">
-                                <a href="#">
-                                    <i class="menu-icon fa fa-leaf green"></i>
-                                    Item #1
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-
-                            <li class="">
-                                <a href="#" class="dropdown-toggle">
-                                    <i class="menu-icon fa fa-pencil orange"></i>
-
-                                    4th level
-                                    <b class="arrow fa fa-angle-down"></b>
-                                </a>
-
-                                <b class="arrow"></b>
-
-                                <ul class="submenu">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="menu-icon fa fa-plus purple"></i>
-                                            Add Product
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="menu-icon fa fa-eye pink"></i>
-                                            View Products
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    @endcan
                 </ul>
             </li>
             @endcan
 
             <li class="">
                 <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-list"></i>
-                    <span class="menu-text"> Tables </span>
+                    <i class="menu-icon fa fa-pencil-square-o"></i>
+                    <span class="menu-text"> Módulo permisos </span>
 
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
@@ -285,29 +224,65 @@
 
                 <ul class="submenu">
                     <li class="">
-                        <a href="tables.html">
+                        <a href="#">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            Simple &amp; Dynamic
+                            Visualizar
                         </a>
 
                         <b class="arrow"></b>
                     </li>
 
                     <li class="">
-                        <a href="jqgrid.html">
+                        <a href="#">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            jqGrid plugin
+                            Crear
                         </a>
 
                         <b class="arrow"></b>
                     </li>
                 </ul>
             </li>
+            @can('courses.index')
+            <li class="">
 
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-pencil-square-o"></i>
+                    <span class="menu-text"> Módulo cursos </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    @can('courses.index')
+                    <li class="">
+                        <a href="#">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Visualizar
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    @endcan
+
+                    @can('courses.create')
+                    <li class="">
+                        <a href="#">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Crear
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    @endcan
+                </ul>
+            </li>
+            @endcan
             <li class="">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
-                    <span class="menu-text"> Forms </span>
+                    <span class="menu-text"> Módulo docentes </span>
 
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
@@ -316,68 +291,23 @@
 
                 <ul class="submenu">
                     <li class="">
-                        <a href="form-elements.html">
+                        <a href="#">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            Form Elements
+                            Visualizar
                         </a>
 
                         <b class="arrow"></b>
                     </li>
 
                     <li class="">
-                        <a href="form-elements-2.html">
+                        <a href="#">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            Form Elements 2
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="form-wizard.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Wizard &amp; Validation
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="wysiwyg.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Wysiwyg &amp; Markdown
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="dropzone.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Dropzone File Upload
+                            Crear
                         </a>
 
                         <b class="arrow"></b>
                     </li>
                 </ul>
-            </li>
-
-            <li class="">
-                <a href="widgets.html">
-                    <i class="menu-icon fa fa-list-alt"></i>
-                    <span class="menu-text"> Widgets </span>
-                </a>
-
-                <b class="arrow"></b>
-            </li>
-
-            <li class="">
-                <a href="gallery.html">
-                    <i class="menu-icon fa fa-picture-o"></i>
-                    <span class="menu-text"> Gallery </span>
-                </a>
-
-                <b class="arrow"></b>
             </li>
         </ul><!-- /.nav-list -->
 
@@ -392,6 +322,17 @@
 
             <div class="page-content">
                 <!-- PAGE CONTENT BEGINS -->
+                @if (session('info'))
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="alert alert-success">
+                                    {{ session('info') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 @yield('content')
                 <!-- PAGE CONTENT ENDS -->
             </div><!-- /.page-content -->
