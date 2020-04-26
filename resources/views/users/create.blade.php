@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('openRoles') open @endsection
+@section('openUsers') open @endsection
 
-@section('createRoles') active @endsection
+@section('createUsers') active @endsection
 
 @section('breadcrumbs')
     <div class="breadcrumbs ace-save-state" id="breadcrumbs">
@@ -11,7 +11,7 @@
                 <i class="ace-icon fa fa-home home-icon"></i>
                 <a href="{{ route('home') }}">Home</a>
             </li>
-            <li class="active">Crear Role</li>
+            <li class="active">Crear usuario</li>
         </ul><!-- /.breadcrumb -->
     </div>
 @endsection
@@ -20,13 +20,13 @@
 <div class="row justify-content-center">
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
-            <div class="panel-heading">Creación de Roles</div>
+            <div class="panel-heading">Creación de Usuarios</div>
             <div class="panel-body">
-                <form method="POST" action="{{ route('roles.store') }}">
+                <form method="POST" action="{{ route('users.store') }}">
                     @csrf
 
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Rol') }}</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Usuario') }}</label>
 
                         <div class="col-md-6">
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autofocus>
@@ -40,12 +40,12 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="slug" class="col-md-4 col-form-label text-md-left">{{ __('Url Amigable') }}</label>
+                        <label for="email" class="col-md-4 col-form-label text-md-left">{{ __('Email') }}</label>
 
                         <div class="col-md-6">
-                            <input id="slug" type="text" class="form-control @error('slug') is-invalid @enderror" name="slug" required >
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" required >
 
-                            @error('slug')
+                            @error('email')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -54,12 +54,12 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-left">{{ __('Descripción') }}</label>
+                        <label for="password" class="col-md-4 col-form-label text-md-left">{{ __('Password') }}</label>
 
                         <div class="col-md-6">
-                            <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" required >
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required >
 
-                            @error('description')
+                            @error('password')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -68,29 +68,16 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="special" class="col-md-4 col-form-label text-md-left">{{ __('Permisos especiales') }}</label>
-
-                        <div class="col-md-6">
-                            <input type="radio" id="without" checked name="special" value="without">
-                            <label for="without">Sin permiso especial</label><br>
-                            <input type="radio" id="all-access" name="special" value="all-access">
-                            <label for="all-access">Acceso total</label><br>
-                            <input type="radio" id="no-access" name="special" value="no-access">
-                            <label for="no-access">Ningún acceso</label><br>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="permissions" class="col-md-4 col-form-label">{{ __('Permisos') }}</label>
+                        <label for="permissions" class="col-md-4 col-form-label">{{ __('Roles') }}</label>
 
                         <div class="col-md-6">
                             <ul class="list-unstyled">
-                                @foreach($permissions as $permission)
+                                @foreach($roles as $role)
                                     <li>
                                         <label>
-                                            <input type="checkbox" name="permissions[]" value="{{ $permission->id }}">
-                                            {{ $permission->name }}
-                                            <em>({{ $permission->description }})</em>
+                                            <input type="checkbox" name="roles[]" value="{{ $role->id }}">
+                                            {{ $role->name }}
+                                            <em>({{ $role->description }})</em>
                                         </label>
                                     </li>
                                 @endforeach

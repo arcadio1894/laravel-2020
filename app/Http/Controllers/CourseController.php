@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -14,7 +15,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::paginate(5);
+        return view('courses.index', compact('courses'));
     }
 
     /**
@@ -78,8 +80,23 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Request $request, $id)
     {
-        //
+        $rules = array(
+            'id' => 'required|exists:courses,id',
+        );
+        $mensajes = array(
+            'id.required' => 'Es necesario enviar el id del curso',
+            'id.exists' => 'El curso no existe en la base de datos',
+        );
+
+        $validator = Validator::make($request->all(), $rules, $mensajes);
+
+        if (!$validator->fails()){
+            $course = Course::find($id);
+            $course->delete();
+        }
+
+        return response()->json($validator->messages(),200);
     }
 }

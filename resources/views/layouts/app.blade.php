@@ -32,7 +32,7 @@
     <![endif]-->
 
     <!-- inline styles related to this page -->
-
+    <link rel="stylesheet" href="{{ asset('toast/jquery.toast.min.css') }}" />
     <!-- ace settings handler -->
     <script src="{{ asset('dashboard/assets/js/ace-extra.min.js') }}"></script>
 
@@ -136,7 +136,7 @@
             </li>
 
             @can('users.index')
-            <li class="">
+            <li class="@yield('openUsers')">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-desktop"></i>
                     <span class="menu-text">
@@ -151,7 +151,7 @@
                 <ul class="submenu">
 
                     @can('users.index')
-                    <li class="">
+                    <li class="@yield('indexUsers')">
                         <a href="{{ route('users.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
@@ -161,8 +161,8 @@
                     </li>
                     @endcan
 
-                    @can('users.edit')
-                    <li class="">
+                    @can('users.create')
+                    <li class="@yield('createUsers')">
                         <a href="{{ route('users.create') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Crear
@@ -177,7 +177,7 @@
             @endcan
 
             @can('roles.index')
-            <li class="">
+            <li class="@yield('openRoles')">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text"> Módulo Roles </span>
@@ -189,7 +189,7 @@
 
                 <ul class="submenu">
                     @can('roles.index')
-                    <li class="">
+                    <li class="@yield('indexRoles')">
                         <a href="{{ route('roles.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
@@ -199,7 +199,7 @@
                     </li>
                     @endcan
                     @can('roles.create')
-                    <li class="">
+                    <li class="@yield('createRoles')">
                         <a href="{{ route('roles.create') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Crear
@@ -212,7 +212,7 @@
             </li>
             @endcan
 
-            <li class="">
+            <li class="@yield('openPermission')">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
                     <span class="menu-text"> Módulo permisos </span>
@@ -223,7 +223,7 @@
                 <b class="arrow"></b>
 
                 <ul class="submenu">
-                    <li class="">
+                    <li class="@yield('indexPermission')">
                         <a href="#">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
@@ -232,7 +232,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li class="">
+                    <li class="@yield('createPermission')">
                         <a href="#">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Crear
@@ -243,7 +243,7 @@
                 </ul>
             </li>
             @can('courses.index')
-            <li class="">
+            <li class="@yield('openCourses')">
 
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -256,21 +256,10 @@
 
                 <ul class="submenu">
                     @can('courses.index')
-                    <li class="">
-                        <a href="#">
+                    <li class="@yield('indexCourses')">
+                        <a href="{{ route('courses.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-                    @endcan
-
-                    @can('courses.create')
-                    <li class="">
-                        <a href="#">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Crear
                         </a>
 
                         <b class="arrow"></b>
@@ -392,6 +381,8 @@
 <script src="{{ asset('dashboard/assets/js/ace.min.js') }}"></script>
 
 <!-- inline scripts related to this page -->
+<script src="{{ asset('toast/jquery.toast.min.js') }}"></script>
+@yield('scripts')
 </body>
 </html>
 

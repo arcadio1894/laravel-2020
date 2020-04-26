@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('openRoles') open @endsection
+
+@section('indexRoles') active @endsection
+
 @section('breadcrumbs')
     <div class="breadcrumbs ace-save-state" id="breadcrumbs">
         <ul class="breadcrumb">

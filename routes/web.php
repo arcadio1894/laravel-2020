@@ -66,9 +66,18 @@ Route::middleware('auth')->group(function () {
 
     // Usuarios
     Route::name('users.')->group(function () {
+        // TODO: Revisar estas rutas
+        Route::get('users/create', 'UserController@create')->name('create')
+            ->middleware('permission:users.create');
+
+        Route::post('users/store', 'UserController@store')->name('store')
+            ->middleware('permission:users.index');
 
         Route::get('users', 'UserController@index')->name('index')
             ->middleware('permission:users.index');
+
+        Route::get('users/{user}/edit', 'UserController@edit')->name('edit')
+            ->middleware('permission:users.edit');
 
         Route::put('users/{user}', 'UserController@update')->name('update')
             ->middleware('permission:users.edit');
@@ -78,16 +87,6 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('users/{user}', 'UserController@destroy')->name('destroy')
             ->middleware('permission:users.destroy');
-
-        Route::get('users/{user}/edit', 'UserController@edit')->name('edit')
-            ->middleware('permission:users.edit');
-
-        // TODO: Revisar estas rutas
-        Route::post('users/store', 'UserController@store')->name('store')
-            ->middleware('permission:users.index');
-
-        Route::get('users/create', 'UserController@create')->name('create')
-            ->middleware('permission:users.create');
 
     });
 
