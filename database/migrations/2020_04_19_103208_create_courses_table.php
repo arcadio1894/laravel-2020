@@ -16,8 +16,12 @@ class CreateCoursesTable extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            // TODO: Faltan más datos
+            $table->string('description')->nullable();
+            $table->string('image')->nullable();
+            $table->decimal('price', 6, 2);
+            $table->integer('stars')->unsigned()->nullable();
+            $table->string('hours');
+            $table->boolean('active');
             $table->softDeletes(); // Agrega deleted_at
             $table->timestamps(); // Agrega created_at y updated_at
         });

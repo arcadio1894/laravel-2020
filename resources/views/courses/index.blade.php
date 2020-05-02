@@ -21,7 +21,7 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
             <div class="panel-heading">Listado de cursos
-                <button class="btn btn-mini btn-primary pull-right">Nuevo curso</button>
+                <button class="btn btn-mini btn-primary pull-right" id="btnCreate"> Nuevo curso</button>
             </div>
             <div class="panel-body">
                 <table class="table table-hover table-striped table-bordered">
@@ -115,6 +115,80 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-10">
+                    <h4 class="modal-title" id="exampleModalLabel">Crear curso</h4>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+            <form method="POST" id="formDelete" data-url="{{ url('courses/store') }}" >
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Curso') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="description" class="col-md-4 col-form-label text-md-left">{{ __('Descripción') }}</label>
+
+                        <div class="col-md-6">
+                            <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" >
+                            </textarea>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="price" class="col-md-4 col-form-label text-md-left">{{ __('Precio') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="stars" class="col-md-4 col-form-label text-md-left">{{ __('Calificación') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="stars" type="number" class="form-control @error('stars') is-invalid @enderror" name="stars" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="hours" class="col-md-4 col-form-label text-md-left">{{ __('Horario') }}</label>
+
+                        <div class="col-md-6">
+                            <textarea id="hours" class="form-control" name="hours" >
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="active" class="col-md-4 col-form-label text-md-left">{{ __('Activo') }}</label>
+
+                        <div class="col-md-6">
+                            <input type="radio" class="form-control" name="hours" value="1" > Activado
+                            <input type="radio" class="form-control" name="hours" value="2" checked> Desactivado
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Guardar</button>
                 </div>
             </form>
         </div>
