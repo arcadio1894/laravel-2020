@@ -22,6 +22,12 @@ class UserSeeder extends Seeder
             'special' 	=> 'all-access'
         ]);
 
+        Role::create([
+            'name'		=> 'Teacher',
+            'slug'  	=> 'teacher',
+            'special' 	=> null
+        ]);
+
         $user = User::create([
             'name'		=> 'Administrador',
             'email'  	=> 'admin@example.com',

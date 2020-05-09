@@ -93,5 +93,16 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    // Teachers
+    Route::name('teachers.')->group(function () {
+
+        Route::get('teachers', 'TeacherController@index')->name('index')
+            ->middleware('permission:teachers.index');
+
+        Route::post('teachers/store', 'TeacherController@store')->name('store')
+            ->middleware('permission:teachers.index');
+
+    });
+
 });
 

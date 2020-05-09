@@ -110,6 +110,10 @@ function updateCourse() {
     });
 }
 
+function showModalCreate() {
+    $modalCreate.modal('show');
+}
+
 function storeCourse() {
     event.preventDefault();
     var createUrl = $formCreate.data('url');
@@ -161,18 +165,6 @@ function storeCourse() {
             console.log(data)
         }
     });
-}
-
-function showModalCreate() {
-    $modalCreate.modal('show');
-}
-
-function showModalVisualizar() {
-    var name = $(this).data('name');
-    var description = $(this).data('description');
-    $bodyShow.find('[id="showName"]').html(name);
-    $bodyShow.find('[id="showDescription"]').html(description);
-    $modalShow.modal('show');
 }
 
 function showModalDestroy() {
@@ -236,4 +228,12 @@ function destroyCourse() {
             console.log(data)
         }
     });
+}
+
+function showModalVisualizar() {
+    var name = $(this).data('name');
+    var description = $(this).data('description');
+    $bodyShow.find('[id="showName"]').html(name);
+    $bodyShow.find('[id="showDescription"]').html(description);
+    $modalShow.modal('show');
 }

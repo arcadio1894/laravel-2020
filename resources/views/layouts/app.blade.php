@@ -268,7 +268,8 @@
                 </ul>
             </li>
             @endcan
-            <li class="">
+            @can('teachers.index')
+            <li class="@yield('openTeachers')">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
                     <span class="menu-text"> Módulo docentes </span>
@@ -279,25 +280,17 @@
                 <b class="arrow"></b>
 
                 <ul class="submenu">
-                    <li class="">
-                        <a href="#">
+                    <li class="@yield('indexTeachers')">
+                        <a href="{{ route('teachers.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
                         </a>
 
                         <b class="arrow"></b>
                     </li>
-
-                    <li class="">
-                        <a href="#">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Crear
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
                 </ul>
             </li>
+            @endcan
         </ul><!-- /.nav-list -->
 
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

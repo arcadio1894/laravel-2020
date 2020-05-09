@@ -2,40 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTeacher;
 use App\Teacher;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $teachers = Teacher::paginate(5);
+        return view('teachers.index', compact('teachers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreTeacher $request)
     {
-        //
+        $validated = $request->validated();
+
+        if (!$request->validator->fails()){
+            // Guardar al usuario
+            $user = User::create([
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'password' => Hash::make('password'),
+            ]);
+            // Guardar el profesor
+            $teacher = Teacher::create([
+                'name' => $request->get('name'),
+                'speciality' => $request->get('speciality'),
+                'years' => $request->get('years'),
+                'country' => $request->get('country'),
+                'phone' => $request->get('phone'),
+                'user_id' => $user->id,
+            ]);
+
+            if (!$request->file('image'))
+            {
+                $teacher->image = 'no_image.jpg';
+            }else{
+                $path = public_path().'/images/teachers/';
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $filename = $teacher->id . '.' . $extension;
+                $request->file('image')->move($path, $filename);
+                $teacher->image = $filename;
+                $teacher->save();
+            }
+
+        }
+
+        return response()->json($request->validator->messages(),200);
     }
 
     /**

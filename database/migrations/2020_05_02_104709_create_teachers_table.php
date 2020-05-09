@@ -20,6 +20,7 @@ class CreateTeachersTable extends Migration
             $table->integer('years');
             $table->string('country');
             $table->string('phone');
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
