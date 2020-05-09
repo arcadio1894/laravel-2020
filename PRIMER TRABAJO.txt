@@ -1,0 +1,22 @@
+PRIMER TRABAJO APLICATIVO:
+1. CRUD Permissions => Index, Create, Update, Delete
+	- Agregar rutas en el WEB.PHP ( Pueden usar ajax con modals o la forma tradicional en diferentes paginas )
+	- Agregar PermissionController
+	- Pueden usar un controlador de recursos para cada metodo
+	- Usar validator propio Validator::make()
+	- La data les voy a enviar mas adelante
+2. Completar el CRUD de profesor => Update, Delete, Show
+	- Agregar rutas en el WEB.PHP ( Usar ajax con modals )
+	- Modificar el TeacherController con los metodos faltantes
+	- Usar UpdateTeacher (FormRequest) y DeleteTeacher (FromRequest)
+
+FECHA DE ENTREGA: 23/05/2020
+
+ENTREGABLES: Enviar su proyecto con los cambios requeridos en codigo. En un word o PDF colocar las clases, codigo, algoritmos que hayan usuado
+
+OTRA FORMA MAS SENCILLA 
+Es crear una rama en github y ponerle su nombre 
+Ejemplo: Jorge_Gonzales
+Y su rama hacer los cambios 
+Y avisar que tus cambios estan subidos.
+De preferencia cada cambio ponerlo en un commit
