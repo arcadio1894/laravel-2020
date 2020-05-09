@@ -29,7 +29,6 @@ class CourseController extends Controller
             'hours' => 'required|string',
             'active' => 'required|boolean'
         );
-
         $mensajes = array(
             'name.required' => 'Es necesario ingresar el nombre del curso',
             'name.string' => 'El nombre del curso debe contener solo caracteres',
@@ -59,11 +58,11 @@ class CourseController extends Controller
             // Guardar el curso
             $course = Course::create([
                 'name' => $request->get('name'),
-                'description' => $request->get('name'),
-                'price' => $request->get('name'),
-                'stars' => $request->get('name'),
-                'hours' => $request->get('name'),
-                'active' => $request->get('name'),
+                'description' => $request->get('description'),
+                'price' => $request->get('price'),
+                'stars' => $request->get('stars'),
+                'hours' => $request->get('hours'),
+                'active' => $request->get('active'),
             ]);
 
             $path = public_path().'/images/courses/';
@@ -87,9 +86,57 @@ class CourseController extends Controller
         //
     }
 
-    public function update(Request $request, Course $course)
+    public function update(Request $request)
     {
-        //
+        $rules = array(
+            'name' => 'required|string|min:5',
+            'description' => 'string|max:255',
+            'price' => 'required|numeric',
+            'stars' => 'numeric',
+            'hours' => 'required|string',
+            'active' => 'required|boolean'
+        );
+        $mensajes = array(
+            'name.required' => 'Es necesario ingresar el nombre del curso',
+            'name.string' => 'El nombre del curso debe contener solo caracteres',
+            'name.min' => 'El nombre del curso debe contener 5 caracteres como mínimo',
+            'description.string' => 'La descripcion debe contener solo caracteres',
+            'description.max' => 'La descripcion debe contener 255 caracteres como maximo',
+            'price.required' => 'Es necesario ingresar el precio del curso',
+            'price.numeric' => 'El precio del curso debe contener solo numeros',
+            'stars.numeric' => 'La valoracion del curso debe contener solo numeros',
+            'active.required' => 'Se debe activar o desactivar el curso',
+            'active.boolean' => 'Error en el tipo de dato',
+            'hours.required' => 'Es necesario ingresar un horario para el curso',
+            'hours.string' => 'El horario no tiene el formato correcto ',
+        );
+
+        $validator = Validator::make($request->all(), $rules, $mensajes);
+
+        if (!$validator->fails()){
+            // Guardar el curso
+            $course = Course::find($request->get('id'));
+            $course->name = $request->get('name');
+            $course->description = $request->get('description');
+            $course->price = $request->get('price');
+            $course->stars = $request->get('stars');
+            $course->hours = $request->get('hours');
+            $course->active = $request->get('active');
+            $course->save();
+
+            if ($request->file('image'))
+            {
+                $path = public_path().'/images/courses/';
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $filename = $course->id . '.' . $extension;
+                $request->file('image')->move($path, $filename);
+                $course->image = $filename;
+                $course->save();
+            }
+
+        }
+
+        return response()->json($validator->messages(),200);
     }
 
     public function destroy(Request $request, $id)
@@ -111,5 +158,11 @@ class CourseController extends Controller
         }
 
         return response()->json($validator->messages(),200);
+    }
+
+    public function getCourse($id)
+    {
+        $course = Course::find($id);
+        return $course;
     }
 }

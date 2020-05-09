@@ -45,7 +45,7 @@
                                 @endcan
 
                                 @can('courses.edit')
-                                <button data-edit="{{ $course->id }}" data-description="{{ $course->description }}" data-name="{{ $course->name }}" class="btn btn-sm btn-warning" title="Editar"><i class="ace-icon fa fa-pencil"></i></button>
+                                <button data-edit="{{ $course->id }}" class="btn btn-sm btn-warning" title="Editar"><i class="ace-icon fa fa-pencil"></i></button>
                                 @endcan
 
                                 @can('courses.destroy')
@@ -120,6 +120,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -134,59 +135,63 @@
                 </div>
 
             </div>
-            <form method="POST" id="formDelete" data-url="{{ url('courses/store') }}" >
+            <form method="POST" id="formCreate" data-url="{{ url('courses/store') }}" enctype="multipart/form-data" >
                 @csrf
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('Curso') }}</label>
+                        <label for="name" class="col-md-4 col-form-label align-right">{{ __('Curso') }}</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus>
+                            <input id="name" type="text" class="form-control" name="name" autofocus>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-left">{{ __('Descripción') }}</label>
+                        <label for="description" class="col-md-4 col-form-label align-right">{{ __('Descripción') }}</label>
 
                         <div class="col-md-6">
-                            <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" >
-                            </textarea>
-
+                            <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" ></textarea>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="price" class="col-md-4 col-form-label text-md-left">{{ __('Precio') }}</label>
+                        <label for="price" class="col-md-4 col-form-label align-right">{{ __('Precio') }}</label>
 
                         <div class="col-md-6">
                             <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" >
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="stars" class="col-md-4 col-form-label text-md-left">{{ __('Calificación') }}</label>
+                        <label for="stars" class="col-md-4 col-form-label align-right">{{ __('Calificación') }}</label>
 
                         <div class="col-md-6">
                             <input id="stars" type="number" class="form-control @error('stars') is-invalid @enderror" name="stars" >
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="hours" class="col-md-4 col-form-label text-md-left">{{ __('Horario') }}</label>
+                        <label for="hours" class="col-md-4 col-form-label align-right">{{ __('Horario') }}</label>
 
                         <div class="col-md-6">
-                            <textarea id="hours" class="form-control" name="hours" >
-                            </textarea>
+                            <textarea id="hours" class="form-control" name="hours" ></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="active" class="col-md-4 col-form-label text-md-left">{{ __('Activo') }}</label>
+                        <label for="active" class="col-md-4 col-form-label align-right">{{ __('Estado') }}</label>
 
                         <div class="col-md-6">
-                            <input type="radio" class="form-control" name="hours" value="1" > Activado
-                            <input type="radio" class="form-control" name="hours" value="2" checked> Desactivado
+                            <input type="radio" name="active" value="1" > Activado
+                            <input type="radio" name="active" value="0" checked> Desactivado
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="image" class="col-md-4 col-form-label align-right">{{ __('Imagen') }}</label>
+
+                        <div class="col-md-6">
+                            <input type="file" name="image" id="image">
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer align-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger">Guardar</button>
                 </div>
@@ -194,6 +199,88 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-10">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar curso</h4>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+            <form method="POST" id="formEdit" data-url="{{ url('courses/update') }}" enctype="multipart/form-data" >
+                @csrf
+                <div class="modal-body" id="bodyEdit">
+                    <input type="hidden" name="id">
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label align-right">{{ __('Curso') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control" name="name" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="description" class="col-md-4 col-form-label align-right">{{ __('Descripción') }}</label>
+
+                        <div class="col-md-6">
+                            <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="price" class="col-md-4 col-form-label align-right">{{ __('Precio') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="price" type="number" class="form-control" name="price" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="stars" class="col-md-4 col-form-label align-right">{{ __('Calificación') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="stars" type="number" class="form-control @error('stars') is-invalid @enderror" name="stars" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="hours" class="col-md-4 col-form-label align-right">{{ __('Horario') }}</label>
+
+                        <div class="col-md-6">
+                            <textarea id="hours" class="form-control" name="hours" ></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="active" class="col-md-4 col-form-label align-right">{{ __('Estado') }}</label>
+
+                        <div class="col-md-6">
+                            <input type="radio" id="radio_active" name="active" value="1" > Activado
+                            <input type="radio" id="radio_inactive" name="active" value="0" > Desactivado
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="image" class="col-md-4 col-form-label align-right">{{ __('Imagen') }}</label>
+
+                        <div class="col-md-6">
+                            <input type="file" name="image" id="image">
+                            <img id="image_preview" src="" width="100px" height="100px">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer align-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')

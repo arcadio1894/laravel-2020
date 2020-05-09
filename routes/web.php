@@ -44,13 +44,16 @@ Route::middleware('auth')->group(function () {
         Route::post('courses/store', 'CourseController@store')->name('store')
             ->middleware('permission:courses.index');
 
+        Route::post('courses/update', 'CourseController@update')->name('update')
+            ->middleware('permission:courses.edit');
+
         Route::get('courses', 'CourseController@index')->name('index')
             ->middleware('permission:courses.index');
 
         Route::get('courses/create', 'CourseController@create')->name('create')
             ->middleware('permission:courses.create');
 
-        Route::put('courses/{course}', 'CourseController@update')->name('update')
+        Route::get('courses/edit/{id}', 'CourseController@getCourse')
             ->middleware('permission:courses.edit');
 
         Route::get('courses/{course}', 'CourseController@show')->name('show')

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Caffeinated\Shinobi\Models\Role;
+use App\User;
 
 class UserSeeder extends Seeder
 {
@@ -20,5 +21,13 @@ class UserSeeder extends Seeder
             'slug'  	=> 'admin',
             'special' 	=> 'all-access'
         ]);
+
+        $user = User::create([
+            'name'		=> 'Administrador',
+            'email'  	=> 'admin@example.com',
+            'password' 	=> bcrypt('123456789')
+        ]);
+
+        $user->roles()->sync(['1']);
     }
 }

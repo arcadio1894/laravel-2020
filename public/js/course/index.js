@@ -1,22 +1,167 @@
 $(document).ready(function () {
     $('[data-visualizar]').on('click', showModalVisualizar);
     $('[data-destroy]').on('click', showModalDestroy);
+    $('[data-edit]').on('click', showModalEdit);
     $('#btnCreate').on('click', showModalCreate);
+    $formCreate = $('#formCreate');
+    $formCreate.on('submit', storeCourse);
     $formEliminar = $('#formDelete');
     $formEliminar.on('submit', destroyCourse);
+    $formEdit = $('#formEdit');
+    $formEdit.on('submit', updateCourse);
+    $bodyEdit = $('#bodyEdit');
     $bodyShow = $('#bodyShow');
     $bodyDelete = $('#bodyDelete');
     $modalShow = $('#modalShow');
     $modalDelete = $('#modalDelete');
     $modalCreate = $('#modalCreate');
+    $modalEdit = $('#modalEdit');
 });
 
 var $bodyShow;
 var $bodyDelete;
+var $bodyEdit;
 var $modalShow;
 var $modalDelete;
 var $formEliminar;
 var $modalCreate;
+var $formCreate;
+var $modalEdit;
+var $formEdit;
+
+function showModalEdit() {
+    var id = $(this).data('edit');
+    $.get('courses/edit/'+id, function(data){
+        console.log(data.name);
+        $bodyEdit.find('[name="id"]').val(data.id);
+        $bodyEdit.find('[name="name"]').val(data.name);
+        $bodyEdit.find('[name="description"]').html(data.description);
+        $bodyEdit.find('[name="price"]').val(data.price);
+        $bodyEdit.find('[name="stars"]').val(data.stars);
+        $bodyEdit.find('[name="hours"]').html(data.hours);
+        var src = window.location.origin+'/images/courses/'+data.image;
+        if(data.image==null)
+        {
+            $('#image_preview').attr('src',window.location.origin+'/images/courses/no_image.jpg');
+        }
+        else
+        {
+            $('#image_preview').attr('src',src);
+        }
+        ( data.active ) ? $("#radio_active").attr('checked', 'checked') : $("#radio_inactive").attr('checked', 'checked');
+    });
+    $modalEdit.modal('show');
+}
+
+function updateCourse() {
+    event.preventDefault();
+    var updateUrl = $formEdit.data('url');
+
+    $.ajax({
+        url: updateUrl,
+        method: 'POST',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            if (data != "") {
+                console.log(data);
+                for (var property in data){
+                    $.toast({
+                        text : data[property],
+                        showHideTransition : 'slide',
+                        bgColor : '#D15B47',
+                        textColor : '#eee',
+                        allowToastClose : false,
+                        hideAfter : 5000,
+                        stack : 10,
+                        textAlign : 'left',
+                        position : 'top-right',
+                        icon: 'error',
+                        heading: 'Error'
+                    });
+                }
+            } else {
+                $modalEdit.modal('hide');
+                $.toast({
+                    text : 'Curso registrado correctamente.',
+                    showHideTransition : 'slide',
+                    bgColor : '#629B58',
+                    textColor : '#eee',
+                    allowToastClose : false,
+                    hideAfter : 5000,
+                    stack : 10,
+                    textAlign : 'left',
+                    position : 'top-right',
+                    icon: 'success',
+                    heading: 'Éxito'
+                });
+                setTimeout(function () {
+                    location.reload();
+                }, 4000)
+            }
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    });
+}
+
+function storeCourse() {
+    event.preventDefault();
+    var createUrl = $formCreate.data('url');
+    $.ajax({
+        url: createUrl,
+        method: 'POST',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            if (data != "") {
+                console.log(data);
+                for (var property in data){
+                    $.toast({
+                        text : data[property],
+                        showHideTransition : 'slide',
+                        bgColor : '#D15B47',
+                        textColor : '#eee',
+                        allowToastClose : false,
+                        hideAfter : 5000,
+                        stack : 10,
+                        textAlign : 'left',
+                        position : 'top-right',
+                        icon: 'error',
+                        heading: 'Error'
+                    });
+                }
+            } else {
+                $modalDelete.modal('hide');
+                $.toast({
+                    text : 'Curso registrado correctamente.',
+                    showHideTransition : 'slide',
+                    bgColor : '#629B58',
+                    textColor : '#eee',
+                    allowToastClose : false,
+                    hideAfter : 5000,
+                    stack : 10,
+                    textAlign : 'left',
+                    position : 'top-right',
+                    icon: 'success',
+                    heading: 'Éxito'
+                });
+                setTimeout(function () {
+                    location.reload();
+                }, 4000)
+            }
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    });
+}
 
 function showModalCreate() {
     $modalCreate.modal('show');
