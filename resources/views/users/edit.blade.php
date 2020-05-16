@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('openRoles') open @endsection
+@section('openUsers') open @endsection
 
-@section('indexRoles') active @endsection
+@section('indexUsers') active @endsection
 
 @section('breadcrumbs')
     <div class="breadcrumbs ace-save-state" id="breadcrumbs">

@@ -19,12 +19,21 @@ class UserSeeder extends Seeder
         Role::create([
             'name'		=> 'Admin',
             'slug'  	=> 'admin',
+            'description' => 'Rol Administrador',
             'special' 	=> 'all-access'
         ]);
 
         Role::create([
             'name'		=> 'Teacher',
             'slug'  	=> 'teacher',
+            'description' => 'Rol Profesor',
+            'special' 	=> null
+        ]);
+
+        Role::create([
+            'name'		=> 'Student',
+            'slug'  	=> 'student',
+            'description' => 'Rol Estudiante',
             'special' 	=> null
         ]);
 

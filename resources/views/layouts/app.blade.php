@@ -135,6 +135,15 @@
                 <b class="arrow"></b>
             </li>
 
+            <li class="">
+                <a href="{{ url('/') }}">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> Perfil </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
             @can('users.index')
             <li class="@yield('openUsers')">
                 <a href="#" class="dropdown-toggle">

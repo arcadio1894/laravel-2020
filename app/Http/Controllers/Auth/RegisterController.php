@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Student;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -53,6 +54,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'job' => ['required', 'string', 'min:3'],
+            'birthday' => ['required', 'date'],
         ]);
     }
 
@@ -64,10 +67,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        // TODO: Creacion de un student
+        Student::create([
+            'name' => $data['name'],
+            'job' => $data['job'],
+            'birthday' => $data['birthday'],
+            'user_id' => $user->id,
+        ]);
+
+        return $user;
+
     }
 }
