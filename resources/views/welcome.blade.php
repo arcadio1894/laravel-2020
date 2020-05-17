@@ -8,6 +8,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('landing/fonts/icomoon/style.css')}}">
+    <link rel="icon" type="image/ico" href="{{ asset('landing/images/icono.ico') }}" />
 
     <link rel="stylesheet" href="{{ asset('landing/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{ asset('landing/css/jquery-ui.css')}}">

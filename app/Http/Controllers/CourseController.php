@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\CourseTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -164,5 +165,36 @@ class CourseController extends Controller
     {
         $course = Course::find($id);
         return $course;
+    }
+
+    public function assign(Request $request)
+    {
+        $rules = array(
+            'id' => 'required|exists:courses,id',
+        );
+
+        $mensajes = array(
+            'id.required' => 'Es necesario enviar el id del curso',
+            'id.exists' => 'El curso no existe en la base de datos',
+        );
+
+        $validator = Validator::make($request->all(), $rules, $mensajes);
+
+        if (!$validator->fails()){
+            // TODO: Primero eliminamos todo y luego guardamos todo
+            $coursesTeachers = CourseTeacher::where('course_id', $request->get('id'));
+            $coursesTeachers->delete();
+
+            foreach ($request->get('teachers') as $teacher)
+            {
+                $courseTeacher = CourseTeacher::create([
+                    'course_id' => $request->get('id'),
+                    'teacher_id' => $teacher
+                ]);
+            }
+
+        }
+
+        return response()->json($validator->messages(),200);
     }
 }

@@ -16,6 +16,10 @@
     </div>
 @endsection
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('dashboard/assets/css/select2.min.css') }}" />
+@endsection
+
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-10 col-md-offset-1">
@@ -53,6 +57,12 @@
                                     <i class="ace-icon fa fa-trash"></i>
                                 </button>
                                 @endcan
+
+                                @can('courses.assign')
+                                    <button data-assign="{{ $course->id }}" data-name="{{ $course->name }}" class="btn btn-sm btn-success" title="Asignar profesores">
+                                        <i class="fa fa-users"></i>
+                                    </button>
+                                @endcan
                             </td>
                         </tr>
                         @endforeach
@@ -86,6 +96,50 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAssign" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-10">
+                    <h4 class="modal-title" id="assignTitle"> </h4>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+            <form method="POST" id="formAssign" data-url="{{ url('courses/assign/') }}" >
+                @csrf
+                <div class="modal-body" id="bodyAssign">
+                    <input type="hidden" name="id" id="courseAssign">
+                    <div class="form-group row">
+                        <label for="teacher" class="col-md-4 col-form-label align-right">{{ __('Profesor Typeahead.js') }}</label>
+
+                        <div class="col-md-8">
+                            <input id="teacher" type="text" class="form-control" name="teacher">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="teachers" class="col-md-4 col-form-label align-right">{{ __('Profesores Select2') }}</label>
+
+                        <div class="col-md-8">
+                            <select multiple="" id="teachers" name="teachers[]" class="select2" data-placeholder="Click to Choose...">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger">Guardar cambios</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -284,5 +338,17 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/typeahead.bundle.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/js/select2.min.js') }}"></script>
     <script src="{{ asset('js/course/index.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(function($){$('.select2').css('width','300px').select2({allowClear:false})
+            $('#select2-multiple-style .btn').on('click', function(e){
+                var target = $(this).find('input[type=radio]');
+                var which = parseInt(target.val());
+                if(which == 2) $('.select2').addClass('tag-input-style');
+                else $('.select2').removeClass('tag-input-style');
+            });
+        });
+    </script>
 @endsection

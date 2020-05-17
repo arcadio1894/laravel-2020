@@ -40,7 +40,7 @@ function storeTeacher() {
                 heading: 'Éxito'
             });
             setTimeout(function () {
-                //location.reload();
+                location.reload();
             }, 4000)
         },
         error: function (data) {

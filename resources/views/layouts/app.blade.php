@@ -9,6 +9,8 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
+    <link rel="icon" type="image/ico" href="{{ asset('landing/images/icono.ico') }}" />
+
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('dashboard/assets/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
@@ -36,12 +38,13 @@
     <!-- ace settings handler -->
     <script src="{{ asset('dashboard/assets/js/ace-extra.min.js') }}"></script>
 
-    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 
     <!--[if lte IE 8]>
     <script src="{{ asset('dashboard/assets/js/html5shiv.min.js') }}"></script>
     <script src="{{ asset('dashboard/assets/js/respond.min.js') }}"></script>
     <![endif]-->
+    @yield('styles')
 </head>
 
 <body class="no-skin">
@@ -362,9 +365,8 @@
 </div><!-- /.main-container -->
 
 <!-- basic scripts -->
-
-<!--[if !IE]> -->
 <script src="{{ asset('dashboard/assets/js/jquery-2.1.4.min.js') }}"></script>
+<!--[if !IE]> -->
 
 <!-- <![endif]-->
 

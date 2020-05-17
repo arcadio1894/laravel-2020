@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseTeacher;
 use App\Http\Requests\StoreTeacher;
 use App\Teacher;
 use App\User;
@@ -102,6 +103,22 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        //
+
+    }
+
+    public function getAll()
+    {
+        $teachers = Teacher::pluck('name')->toArray();
+
+        return $teachers;
+    }
+
+    public function getTeachers($idCourse)
+    {
+        $teachers = Teacher::get(['id','name']);
+
+        $teachersSelected = CourseTeacher::where('course_id', $idCourse)->pluck('teacher_id')->toArray();
+
+        return (array('teachers'=>$teachers,'teachersSelected'=>$teachersSelected));
     }
 }
