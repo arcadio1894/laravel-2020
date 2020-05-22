@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\CourseTeacher;
 use App\Http\Requests\StoreTeacher;
+use App\Http\Requests\DeleteTeacher;
+use App\Http\Requests\UpdateTeacher;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
@@ -90,9 +92,33 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(UpdateTeacher $request)
     {
-        //
+      $validated = $request->validated();
+
+      if (!$request->validator->fails()){
+          // Guardar el teacher
+          $teacher = Teacher::find($request->get('id'));
+          $teacher->name = $request->get('name');
+          $teacher->speciality = $request->get('speciality');
+          $teacher->years = $request->get('years');
+          $teacher->country = $request->get('country');
+          $teacher->phone = $request->get('phone');
+          $teacher->save();
+
+          if ($request->file('image'))
+          {
+              $path = public_path().'/images/teachers/';
+              $extension = $request->file('image')->getClientOriginalExtension();
+              $filename = $teacher->id . '.' . $extension;
+              $request->file('image')->move($path, $filename);
+              $teacher->image = $filename;
+              $teacher->save();
+          }
+
+      }
+
+        return response()->json($request->validator->messages(),200);
     }
 
     /**
@@ -101,15 +127,21 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(DeleteTeacher $request)
     {
+      $validated = $request->validated();
 
+      if (!$request->validator->fails()){
+        $teacher = Teacher::find($request->get('id'));
+        $teacher->delete();
+      }
+
+      return response()->json($request->validator->messages(),200);
     }
 
     public function getAll()
     {
         $teachers = Teacher::pluck('name')->toArray();
-
         return $teachers;
     }
 
@@ -120,5 +152,11 @@ class TeacherController extends Controller
         $teachersSelected = CourseTeacher::where('course_id', $idCourse)->pluck('teacher_id')->toArray();
 
         return (array('teachers'=>$teachers,'teachersSelected'=>$teachersSelected));
+    }
+
+    public function getTeacher($id)
+    {
+        $teacher = Teacher::find($id);
+        return $teacher;
     }
 }
