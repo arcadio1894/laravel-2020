@@ -224,6 +224,7 @@
             </li>
             @endcan
 
+            @can('permissions.index')
             <li class="@yield('openPermission')">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -236,24 +237,17 @@
 
                 <ul class="submenu">
                     <li class="@yield('indexPermission')">
-                        <a href="#">
+                        <a href="{{ route('permissions.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
                         </a>
 
                         <b class="arrow"></b>
                     </li>
-
-                    <li class="@yield('createPermission')">
-                        <a href="#">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Crear
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
                 </ul>
             </li>
+            @endcan
+            
             @can('courses.index')
             <li class="@yield('openCourses')">
 
