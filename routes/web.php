@@ -128,7 +128,7 @@ Route::middleware('auth')->group(function () {
     Route::get('teachers/getTeachers/{idCourse}', 'TeacherController@getTeachers');
 
 
-    // Cursos
+    // Permisos
     Route::name('permissions.')->group(function () {
 
         Route::post('permissions/store', 'PermissionController@store')->name('store')
