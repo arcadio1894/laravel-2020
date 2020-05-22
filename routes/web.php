@@ -114,5 +114,26 @@ Route::middleware('auth')->group(function () {
     Route::get('teachers/getTeachers/{idCourse}', 'TeacherController@getTeachers');
 
 
+    // Permission
+    Route::name('permission.')->group(function () {
+
+        Route::get('permission', 'PermissionController@index')->name('index')
+            ->middleware('permission:permission.index');
+
+        Route::post('permission/update', 'PermissionController@update')->name('update')
+            ->middleware('permission:permission.edit');
+        
+        Route::get('permission/edit/{id}', 'PermissionController@edit')
+            ->middleware('permission:permission.edit');
+
+        Route::post('permission/store','PermissionController@store')->name('store')
+            ->middleware('permission:courses.index');
+
+        Route::delete('permission/{permission}', 'PermissionController@destroy')->name('destroy')
+            ->middleware('permission:permission.destroy');
+
+    });
+
+
 });
 

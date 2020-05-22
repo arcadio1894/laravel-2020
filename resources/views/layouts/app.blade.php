@@ -236,18 +236,9 @@
 
                 <ul class="submenu">
                     <li class="@yield('indexPermission')">
-                        <a href="#">
+                        <a href="{{ route('permission.index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
                             Visualizar
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="@yield('createPermission')">
-                        <a href="#">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Crear
                         </a>
 
                         <b class="arrow"></b>
