@@ -6,6 +6,7 @@ use App\CourseTeacher;
 use App\Http\Requests\StoreTeacher;
 use App\Teacher;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -120,5 +121,73 @@ class TeacherController extends Controller
         $teachersSelected = CourseTeacher::where('course_id', $idCourse)->pluck('teacher_id')->toArray();
 
         return (array('teachers'=>$teachers,'teachersSelected'=>$teachersSelected));
+    }
+
+    // Uso de Carbon
+    public function carbon()
+    {
+        $carbon = Carbon::now( 'America/Vancouver' );
+        var_dump($carbon);
+
+        $string = $carbon->isoFormat('dddd D');
+        var_dump($string);
+
+        $create = Carbon::create(2020, 5, 23, 10, 44, 0);
+        var_dump($create);
+
+        $add = $carbon->add('month', 1);
+        var_dump($add);
+
+        $diff = $add->diffInYears($create);
+        var_dump($diff);
+
+        $carbon2 = new Carbon('Europe/London');
+        var_dump($carbon2);
+
+        $carbon3 = Carbon::now('+13:30');
+        var_dump($carbon3->tzName);
+
+        $today = Carbon::today();
+        var_dump($today);
+        $yesterday = Carbon::yesterday();
+        var_dump($yesterday);
+        $tomorrow = Carbon::tomorrow();
+        var_dump($tomorrow);
+
+        echo Carbon::create(2000, 1, 35, 13, 0, 0);
+
+        echo "\n";
+
+        try {
+            Carbon::createSafe(2000, 1, 35, 13, 0, 0);
+        } catch (\Carbon\Exceptions\InvalidDateException $exp) {
+            echo $exp->getMessage();
+        }
+
+        $teacher = Teacher::where('id', 1)->get();
+
+        $date = $teacher[0]->updated_at;
+        //dd($date->diffForHumans());
+
+
+        $userTimezone = 'America/Lima';
+        $userLanguage = 'es_ES';
+
+        Carbon::macro('formatForUser', static function () use ($userTimezone, $userLanguage) {
+            $date = self::this()->copy()->tz($userTimezone)->locale($userLanguage);
+
+            return $date->calendar(); // or ->isoFormat($customFormat), ->diffForHumans(), etc.
+        });
+
+        echo Carbon::parse($date, 'America/Lima')->formatForUser();   // 23/01/2010
+        echo "\n";
+        echo Carbon::tomorrow()->formatForUser();                  // Demain à 02:00
+        echo "\n";
+        echo Carbon::now()->subDays(3)->formatForUser();
+
+        $date = $date->locale('es_ES');
+        echo $date->diffForHumans();
+
+
     }
 }

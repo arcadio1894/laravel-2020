@@ -98,5 +98,134 @@ class PermissionSeeder extends Seeder
             'slug'          => 'courses.destroy',
             'description'   => 'Podría eliminar cualquier curso del sistema',
         ]);
+
+        // Student
+        Permission::create([
+            'name'          => 'Ver sus cursos',
+            'slug'          => 'student.showcourse',
+            'description'   => 'Puede visualizar sus cursos inscritos',
+        ]);
+        Permission::create([
+            'name'          => 'Ver temas de sus cursos',
+            'slug'          => 'student.showtasks',
+            'description'   => 'Puede visualizar los temas sus cursos inscritos',
+        ]);
+        Permission::create([
+            'name'          => 'Descargar contenido',
+            'slug'          => 'student.download',
+            'description'   => 'Puede descargar contenido',
+        ]);
+        Permission::create([
+            'name'          => 'Visualizar su perfil',
+            'slug'          => 'student.perfilshow',
+            'description'   => 'Puede visualizar su perfil',
+        ]);
+        Permission::create([
+            'name'          => 'Editar su perfil',
+            'slug'          => 'student.perfiledit',
+            'description'   => 'Puede editar su perfil',
+        ]);
+        Permission::create([
+            'name'          => 'Ver profesor del curso',
+            'slug'          => 'student.teacher',
+            'description'   => 'Puede visualizar los datos del profesor',
+        ]);
+        Permission::create([
+            'name'          => 'Ver estudiantes',
+            'slug'          => 'student.showothers',
+            'description'   => 'Puede visualizar los nombres de los estudiantes',
+        ]);
+        Permission::create([
+            'name'          => 'Subir archivos',
+            'slug'          => 'student.upload',
+            'description'   => 'Puede subir archivos al tema',
+        ]);
+        Permission::create([
+            'name'          => 'Hacer comentarios',
+            'slug'          => 'student.comment',
+            'description'   => 'Puede hacer comentarios',
+        ]);
+        Permission::create([
+            'name'          => 'Cancelar suscripcion',
+            'slug'          => 'student.cancel',
+            'description'   => 'Puede cancelar la suscripcion a un curso',
+        ]);
+
+        // teacher
+        Permission::create([
+            'name'          => 'Ver sus cursos',
+            'slug'          => 'teacher.showcourse',
+            'description'   => 'Puede visualizar sus cursos programados',
+        ]);
+        Permission::create([
+            'name'          => 'Ver temas de sus cursos',
+            'slug'          => 'teacher.showtasks',
+            'description'   => 'Puede visualizar los temas sus cursos programados',
+        ]);
+        Permission::create([
+            'name'          => 'Editar temas de sus cursos',
+            'slug'          => 'teacher.edittasks',
+            'description'   => 'Puede visualizar los temas sus cursos programados',
+        ]);
+        Permission::create([
+            'name'          => 'Eliminar temas de sus cursos',
+            'slug'          => 'teacher.deletetasks',
+            'description'   => 'Puede visualizar los temas sus cursos programados',
+        ]);
+        Permission::create([
+            'name'          => 'Ver contenido de sus temas',
+            'slug'          => 'teacher.showcontent',
+            'description'   => 'Puede visualizar los temas sus cursos programados',
+        ]);
+        Permission::create([
+            'name'          => 'Editar contenido de sus temas',
+            'slug'          => 'teacher.editcontent',
+            'description'   => 'Puede visualizar los temas sus cursos programados',
+        ]);
+        Permission::create([
+            'name'          => 'Eliminar contenido de sus temas',
+            'slug'          => 'teacher.deletecontent',
+            'description'   => 'Puede visualizar los temas sus cursos programados',
+        ]);
+        Permission::create([
+            'name'          => 'Descargar contenido',
+            'slug'          => 'teacher.download',
+            'description'   => 'Puede descargar contenido',
+        ]);
+        Permission::create([
+            'name'          => 'Visualizar su perfil',
+            'slug'          => 'teacher.perfilshow',
+            'description'   => 'Puede visualizar su perfil',
+        ]);
+        Permission::create([
+            'name'          => 'Editar su perfil',
+            'slug'          => 'teacher.perfiledit',
+            'description'   => 'Puede editar su perfil',
+        ]);
+        Permission::create([
+            'name'          => 'Ver estudiantes',
+            'slug'          => 'teacher.showstudents',
+            'description'   => 'Puede visualizar los nombres de los estudiantes',
+        ]);
+        Permission::create([
+            'name'          => 'Asignar calificativo estudiantes',
+            'slug'          => 'teacher.calificar',
+            'description'   => 'Puede calificar a los estudiantes',
+        ]);
+        Permission::create([
+            'name'          => 'Subir archivos',
+            'slug'          => 'teacher.upload',
+            'description'   => 'Puede subir archivos al tema',
+        ]);
+        Permission::create([
+            'name'          => 'Hacer comentarios',
+            'slug'          => 'teacher.comment',
+            'description'   => 'Puede hacer comentarios',
+        ]);
+        Permission::create([
+            'name'          => 'Enviar correo',
+            'slug'          => 'teacher.send',
+            'description'   => 'Puede enviar correos a los estudiantes',
+        ]);
     }
 }

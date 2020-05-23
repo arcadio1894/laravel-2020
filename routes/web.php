@@ -105,13 +105,13 @@ Route::middleware('auth')->group(function () {
         Route::post('teachers/store', 'TeacherController@store')->name('store')
             ->middleware('permission:teachers.index');
 
-
-
     });
 
     Route::get('teachers/getAll', 'TeacherController@getAll');
 
     Route::get('teachers/getTeachers/{idCourse}', 'TeacherController@getTeachers');
+
+    Route::get('carbon', 'TeacherController@carbon');
 
 
 });

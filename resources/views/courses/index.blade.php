@@ -33,6 +33,7 @@
                         <tr>
                             <th>#</th>
                             <th>Curso</th>
+                            <th>Modificado</th>
                             <th>Descripción</th>
                             <th colspan="3">Acciones</th>
                         </tr>
@@ -42,6 +43,7 @@
                         <tr>
                             <td>{{ $course->id }}</td>
                             <td>{{ $course->name }}</td>
+                            <td>{{ $course->update_humans }}</td>
                             <td>{{ $course->description }}</td>
                             <td>
                                 @can('courses.show')
