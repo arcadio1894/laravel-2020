@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\CourseTeacher;
+use App\Http\Requests\UpdateTeacher;
 use App\Http\Requests\StoreTeacher;
+use App\Http\Requests\DeleteTeacher;
 use App\Teacher;
 use App\User;
+use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -61,48 +64,44 @@ class TeacherController extends Controller
         return response()->json($request->validator->messages(),200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Teacher $teacher)
+    
+    public function edit($id)
     {
-        //
+        $teachers = Teacher::find($id);
+        return $teachers;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Teacher $teacher)
+    
+    public function update(UpdateTeacher $request)
     {
-        //
+        // Actualizar Teacher
+        $teacher = Teacher::find($request->get('id'));
+        $teacher->name = $request->get('name');
+        $teacher->speciality = $request->get('speciality');
+        $teacher->years = $request->get('years');
+        $teacher->country = $request->get('country');
+        $teacher->phone = $request->get('phone');
+        $teacher->save();
+
+        if ($request->file('image'))
+        {
+            $path = public_path().'/images/teachers/';
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $filename = $teacher->id . '.' . $extension;
+            $request->file('image')->move($path, $filename);
+            $teacher->image = $filename;
+            $teacher->save();
+        }
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Teacher $teacher)
+    
+    public function destroy(DeleteTeacher $request, $id)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Teacher $teacher)
-    {
+        $teacher = Teacher::findOrFail($id);
+        $teacher->courses()->where('id',$id)->detach();
+        $teacher->delete();
 
     }
 

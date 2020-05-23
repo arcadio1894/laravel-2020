@@ -102,10 +102,20 @@ Route::middleware('auth')->group(function () {
         Route::get('teachers', 'TeacherController@index')->name('index')
             ->middleware('permission:teachers.index');
 
+        Route::post('teachers/update', 'TeacherController@update')->name('update')
+            ->middleware('permission:teachers.edit');
+
         Route::post('teachers/store', 'TeacherController@store')->name('store')
             ->middleware('permission:teachers.index');
+        
+        Route::get('teachers/edit/{id}', 'TeacherController@edit')
+            ->middleware('permission:teachers.edit');
 
+        Route::delete('teachers/{teacher}', 'TeacherController@destroy')->name('destroy')
+            ->middleware('permission:teachers.destroy');
 
+        Route::get('teachers/{course}', 'TeacherController@show')->name('show')
+            ->middleware('permission:teachers.show');
 
     });
 
