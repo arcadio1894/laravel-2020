@@ -1,110 +1,60 @@
 $(document).ready(function () {
 
+    $('[data-visualizar]').on('click', showModalVisualizar);
+    $('[data-destroy]').on('click', showModalDestroy);
+    $('[data-edit]').on('click', showModalEdit);
     $('#btnCreate').on('click', showModalCreate);
     $formCreate = $('#formCreate');
-    $formCreate.on('submit', storeTeacher);
-    $modalCreate = $('#modalCreate');
-    $('[data-edit]').on('click', showModalEdit);
-    $('[data-destroy]').on('click', showModalDestroy);
+    $formCreate.on('submit', storePermission);
     $formEliminar = $('#formDelete');
-    $formEliminar.on('submit', destroyTeacher);
+    $formEliminar.on('submit', destroyPermission);
     $formEdit = $('#formEdit');
-    $formEdit.on('submit', updateTeacher);
+    $formEdit.on('submit', updatePermission);
     $bodyEdit = $('#bodyEdit');
+    $bodyShow = $('#bodyShow');
     $bodyDelete = $('#bodyDelete');
-    $modalEdit = $('#modalEdit');
+    $modalShow = $('#modalShow');
     $modalDelete = $('#modalDelete');
     $modalCreate = $('#modalCreate');
+    $modalEdit = $('#modalEdit');
 
 });
 
-var $modalCreate;
-var $formCreate;
-var $bodyEdit;
-var $formEdit;
-var $modalEdit;
+var $bodyShow;
 var $bodyDelete;
+var $bodyEdit;
+var $modalShow;
 var $modalDelete;
 var $formEliminar;
+var $modalCreate;
+var $formCreate;
+var $modalEdit;
+var $formEdit;
 
-function showModalCreate() {
-    $modalCreate.modal('show');
-}
-
-function storeTeacher() {
-    event.preventDefault();
-    var createUrl = $formCreate.data('url');
-    $.ajax({
-        url: createUrl,
-        method: 'POST',
-        data: new FormData(this),
-        processData: false,
-        contentType: false,
-        success: function (data) {
-            console.log(data);
-            $modalCreate.modal('hide');
-            $.toast({
-                text : 'Profesor registrado correctamente.',
-                showHideTransition : 'slide',
-                bgColor : '#629B58',
-                textColor : '#eee',
-                allowToastClose : false,
-                hideAfter : 4000,
-                stack : 10,
-                textAlign : 'left',
-                position : 'top-right',
-                icon: 'success',
-                heading: 'Éxito'
-            });
-            setTimeout(function () {
-                location.reload();
-            }, 4000)
-        },
-        error: function (data) {
-            for (var property in data.responseJSON.errors){
-                $.toast({
-                    text : data.responseJSON.errors[property],
-                    showHideTransition : 'slide',
-                    bgColor : '#D15B47',
-                    textColor : '#eee',
-                    allowToastClose : false,
-                    hideAfter : 4000,
-                    stack : 10,
-                    textAlign : 'left',
-                    position : 'top-right',
-                    icon: 'error',
-                    heading: 'Error'
-                });
-            }
-        }
-    });
+function showModalVisualizar() {
+    var name = $(this).data('name');
+    var slug = $(this).data('slug');
+    var description = $(this).data('description');
+    $bodyShow.find('[id="showName"]').html(name);
+    $bodyShow.find('[id="showSlug"]').html(slug);
+    $bodyShow.find('[id="showDescription"]').html(description);
+    $modalShow.modal('show');
 }
 
 function showModalEdit() {
     var id = $(this).data('edit');
-    $.get('teachers/edit/'+id, function(data){
+    $.get('permissions/edit/'+id, function(data){
         console.log(data.name);
         $bodyEdit.find('[name="id"]').val(data.id);
         $bodyEdit.find('[name="name"]').val(data.name);
-        $bodyEdit.find('[name="speciality"]').val(data.speciality);
-        $bodyEdit.find('[name="description"]').val(data.description);
-        $bodyEdit.find('[name="years"]').val(data.years);
-        $bodyEdit.find('[name="country"]').val(data.country);
-        $bodyEdit.find('[name="phone"]').val(data.phone);
-        var src = window.location.origin+'/images/teachers/'+data.image;
-        if(data.image==null)
-        {
-            $('#image_preview').attr('src',window.location.origin+'/images/courses/no_image.jpg');
-        }
-        else
-        {
-            $('#image_preview').attr('src',src);
-        }
+        $bodyEdit.find('[name="slug"]').val(data.slug);
+        $bodyEdit.find('[name="description"]').html(data.description);
+
     });
     $modalEdit.modal('show');
 }
 
-function updateTeacher() {
+function updatePermission() {
     event.preventDefault();
     var updateUrl = $formEdit.data('url');
 
@@ -138,7 +88,64 @@ function updateTeacher() {
             } else {
                 $modalEdit.modal('hide');
                 $.toast({
-                    text : 'Profesor registrado correctamente.',
+                    text : 'Permiso actualizado correctamente.',
+                    showHideTransition : 'slide',
+                    bgColor : '#629B58',
+                    textColor : '#eee',
+                    allowToastClose : false,
+                    hideAfter : 5000,
+                    stack : 10,
+                    textAlign : 'left',
+                    position : 'top-right',
+                    icon: 'success',
+                    heading: 'Éxito'
+                });
+                setTimeout(function () {
+                    location.reload();
+                }, 4000)
+            }
+        },
+        error: function (data) {
+            console.log(data)
+        }
+    });
+}
+
+function showModalCreate() {
+    $modalCreate.modal('show');
+}
+
+function storePermission() {
+    event.preventDefault();
+    var createUrl = $formCreate.data('url');
+    $.ajax({
+        url: createUrl,
+        method: 'POST',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            if (data != "") {
+                console.log(data);
+                for (var property in data){
+                    $.toast({
+                        text : data[property],
+                        showHideTransition : 'slide',
+                        bgColor : '#D15B47',
+                        textColor : '#eee',
+                        allowToastClose : false,
+                        hideAfter : 5000,
+                        stack : 10,
+                        textAlign : 'left',
+                        position : 'top-right',
+                        icon: 'error',
+                        heading: 'Error'
+                    });
+                }
+            } else {
+                $modalDelete.modal('hide');
+                $.toast({
+                    text : 'Permiso registrado correctamente.',
                     showHideTransition : 'slide',
                     bgColor : '#629B58',
                     textColor : '#eee',
@@ -164,14 +171,14 @@ function updateTeacher() {
 function showModalDestroy() {
     var id = $(this).data('destroy');
     var name = $(this).data('name');
-    $bodyDelete.find('[id="teacherDelete"]').val(id);
+    $bodyDelete.find('[id="permissionDelete"]').val(id);
     $bodyDelete.find('[id="showName"]').html(name);
     $modalDelete.modal('show');
 }
 
-function destroyTeacher() {
+function destroyPermission() {
     event.preventDefault();
-    var id = $('#teacherDelete').val();
+    var id = $('#permissionDelete').val();
     var deleteUrl = $formEliminar.data('url')+'/'+id;
     $.ajax({
         url: deleteUrl,
@@ -201,7 +208,7 @@ function destroyTeacher() {
             } else {
                 $modalDelete.modal('hide');
                 $.toast({
-                    text : 'Profesor eliminado correctamente.',
+                    text : 'Permiso eliminado correctamente.',
                     showHideTransition : 'slide',  // It can be plain, fade or slide
                     bgColor : '#629B58',              // Background color for toast
                     textColor : '#eee',            // text color
@@ -223,3 +230,4 @@ function destroyTeacher() {
         }
     });
 }
+

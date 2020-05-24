@@ -90,9 +90,34 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(UpdateTeacher $request)
     {
-        //
+        $validated = $request->validated();
+
+        if (!$request->validator->fails()){
+            $teacher = Teacher::find($request->get('id'));
+            $teacher->name =  $request->get('name');
+            $teacher->speciality = $request->get('speciality');
+            $teacher->years =$request->get('years');
+            $teacher->country = $request->get('country');
+            $teacher->phone =$request->get('phone');
+            $teacher->save();
+
+            if (!$request->file('image'))
+            {
+                $teacher->image = 'no_image.jpg';
+            }else{
+                $path = public_path().'/images/teachers/';
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $filename = $teacher->id . '.' . $extension;
+                $request->file('image')->move($path, $filename);
+                $teacher->image = $filename;
+                $teacher->save();
+            }
+
+        }
+
+        return response()->json($request->validator->messages(),200);
     }
 
     /**
@@ -101,9 +126,16 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(DeleteTeacher $request,$id)
     {
+        $validated = $request->validated();
 
+        if (!$request->validator->fails()){
+            $teacher = Teacher::find($id);
+            $teacher->delete();
+        }
+
+        return response()->json($request->validator->messages(),200);
     }
 
     public function getAll()

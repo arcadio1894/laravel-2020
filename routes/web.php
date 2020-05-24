@@ -105,6 +105,23 @@ Route::middleware('auth')->group(function () {
         Route::post('teachers/store', 'TeacherController@store')->name('store')
             ->middleware('permission:teachers.index');
 
+        Route::post('teachers/update', 'TeacherController@update')->name('update')
+            ->middleware('permission:teachers.edit');
+
+        Route::get('teachers/create', 'TeacherController@create')->name('create')
+            ->middleware('permission:teachers.create');
+
+        Route::get('teachers/edit/{id}', 'TeacherController@getTeacher')
+            ->middleware('permission:teachers.edit');
+
+        Route::get('teachers/{teacher}', 'TeacherController@show')->name('show')
+            ->middleware('permission:teachers.show');
+
+        Route::delete('teachers/{teacher}', 'TeacherController@destroy')->name('destroy')
+            ->middleware('permission:teachers.destroy');
+
+        Route::get('teachers/{teacher}/edit', 'TeacherController@edit')->name('edit')
+            ->middleware('permission:teachers.edit');
 
 
     });
@@ -114,5 +131,32 @@ Route::middleware('auth')->group(function () {
     Route::get('teachers/getTeachers/{idCourse}', 'TeacherController@getTeachers');
 
 
+    //Permisos
+    Route::name('permissions.')->group(function (){
+
+        Route::post('permissions/store', 'PermissionController@store')->name('store')
+            ->middleware('permission:permissions.index');
+
+        Route::get('permissions', 'PermissionController@index')->name('index')
+            ->middleware('permission:permissions.index');
+
+        Route::post('permissions/update', 'PermissionController@update')->name('update')
+            ->middleware('permission:permissions.edit');
+
+        Route::get('permissions/create', 'PermissionController@create')->name('create')
+            ->middleware('permission:permissions.create');
+
+        Route::get('permissions/edit/{id}', 'PermissionController@getTeacher')
+            ->middleware('permission:permissions.edit');
+
+        Route::get('permissions/{permission}', 'PermissionController@show')->name('show')
+            ->middleware('permission:permissions.show');
+
+        Route::delete('permissions/{permission}', 'PermissionController@destroy')->name('destroy')
+            ->middleware('permission:permissions.destroy');
+
+        Route::get('permissions/{permission}/edit', 'PermissionController@edit')->name('edit')
+            ->middleware('permission:permissions.edit');
+    });
 });
 
