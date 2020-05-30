@@ -13,8 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 10)->create();
-
         // TODO: Rol por defecto
         Role::create([
             'name'		=> 'Admin',
@@ -43,6 +41,22 @@ class UserSeeder extends Seeder
             'password' 	=> bcrypt('123456789')
         ]);
 
+        $user2 = User::create([
+            'name'		=> 'Jorge Gonzales Castillo',
+            'email'  	=> 'joryes1894@gmail.com',
+            'password' 	=> bcrypt('123456789')
+        ]);
+
+        $user3 = User::create([
+            'name'		=> 'Juan Perez Perez',
+            'email'  	=> 'juanperez@gmail.com',
+            'password' 	=> bcrypt('123456789')
+        ]);
+
+        factory(App\User::class, 10)->create();
+
         $user->roles()->sync(['1']);
+        $user2->roles()->sync(['2']);
+        $user3->roles()->sync(['3']);
     }
 }

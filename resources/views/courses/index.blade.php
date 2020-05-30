@@ -25,7 +25,9 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
             <div class="panel-heading">Listado de cursos
+                @can('courses.create')
                 <button class="btn btn-mini btn-primary pull-right" id="btnCreate"> Nuevo curso</button>
+                @endcan
             </div>
             <div class="panel-body">
                 <table class="table table-hover table-striped table-bordered">

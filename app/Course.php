@@ -17,6 +17,11 @@ class Course extends Model
         return $this->belongsToMany('App\Teacher', 'course_teachers')->withPivot('teacher_id');
     }
 
+    public function subjects()
+    {
+        return $this->hasMany('App\Subject');
+    }
+
     public function getUpdateHumansAttribute()
     {
         $date = $this->updated_at->locale('es_ES');

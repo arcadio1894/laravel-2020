@@ -68,6 +68,9 @@ Route::middleware('auth')->group(function () {
         Route::post('courses/assign', 'CourseController@assign')->name('assign')
             ->middleware('permission:courses.assign');
 
+        Route::get('courses/subjects/{id}', 'CourseController@subjects')->name('subjects')
+            ->middleware('permission:teacher.showtasks');
+
     });
 
     // Usuarios
@@ -104,6 +107,9 @@ Route::middleware('auth')->group(function () {
 
         Route::post('teachers/store', 'TeacherController@store')->name('store')
             ->middleware('permission:teachers.index');
+
+        Route::get('teachers/showCourse', 'TeacherController@showCourse')->name('showCourse')
+            ->middleware('permission:teacher.showCourse');
 
     });
 

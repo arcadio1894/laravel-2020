@@ -8,6 +8,7 @@ use App\Teacher;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
@@ -121,6 +122,18 @@ class TeacherController extends Controller
         $teachersSelected = CourseTeacher::where('course_id', $idCourse)->pluck('teacher_id')->toArray();
 
         return (array('teachers'=>$teachers,'teachersSelected'=>$teachersSelected));
+    }
+
+    public function showCourse()
+    {
+        $user_teacher = User::where('id', Auth::user()->id)->with('teachers')->get();
+        //dd(isset($user_teacher[0]));
+        if (isset($user_teacher[0]))
+            $courses = Teacher::find($user_teacher[0]->teachers[0]->id)->with('courses')->get();
+        else
+            $courses = null;
+        //dd($courses);
+        return view('teachers.showCourse', compact('courses'));
     }
 
     // Uso de Carbon

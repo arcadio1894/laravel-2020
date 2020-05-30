@@ -38,13 +38,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function teacher()
+    public function teachers()
     {
-        return $this->hasMany('App/Teacher');
+        return $this->hasMany('App\Teacher');
     }
 
-    public function student()
+    public function students()
     {
-        return $this->hasMany('App/Student');
+        return $this->hasMany('App\Student');
     }
 }

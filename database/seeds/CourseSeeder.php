@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Course;
 
 class CourseSeeder extends Seeder
 {
@@ -11,6 +12,15 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Course::class, 20)->create();
+        Course::create([
+            'name'          => 'Laravel 7',
+            'description'   => 'Curso de desarrollo de paginas web usando Laravel',
+            'image'         => '1.jpg',
+            'price'         => 500.00,
+            'stars'         => 4,
+            'hours'         => 'Sab y Dom 10am a 12pm',
+            'active'        => 1
+        ]);
+        factory(App\Course::class, 10)->create();
     }
 }

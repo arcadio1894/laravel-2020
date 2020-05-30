@@ -254,6 +254,7 @@
                     </li>
                 </ul>
             </li>
+
             @can('courses.index')
             <li class="@yield('openCourses')">
 
@@ -280,6 +281,7 @@
                 </ul>
             </li>
             @endcan
+
             @can('teachers.index')
             <li class="@yield('openTeachers')">
                 <a href="#" class="dropdown-toggle">
@@ -303,6 +305,31 @@
                 </ul>
             </li>
             @endcan
+
+            @can('teacher.showcourse')
+                <li class="@yield('openShowCourse')">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-pencil-square-o"></i>
+                        <span class="menu-text"> Cursos programados </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="@yield('indexShowCourse')">
+                            <a href="{{ route('teachers.showCourse') }}">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Visualizar
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+
         </ul><!-- /.nav-list -->
 
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

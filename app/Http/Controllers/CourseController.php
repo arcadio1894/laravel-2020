@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\CourseTeacher;
+use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -196,5 +197,12 @@ class CourseController extends Controller
         }
 
         return response()->json($validator->messages(),200);
+    }
+
+    public function subjects( $id )
+    {
+        $course = Course::where('id', $id)->with('subjects')->first();
+        //dd($course);
+        return view('subjects.index', compact('course'));
     }
 }
