@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class TeacherController extends Controller
 {
@@ -50,10 +51,19 @@ class TeacherController extends Controller
             {
                 $teacher->image = 'no_image.jpg';
             }else{
+                // TODO: Uso de Intervention Image
+                $img = Image::make($request->file('image'));
+                //dd($img);
+                $img->resize(320, 240);
+                $marker = Image::make(public_path().'/images/teachers/watermark.png')->resize(320, 240);
+                $img->insert($marker);
+
                 $path = public_path().'/images/teachers/';
                 $extension = $request->file('image')->getClientOriginalExtension();
                 $filename = $teacher->id . '.' . $extension;
-                $request->file('image')->move($path, $filename);
+
+                $img->save($path.$filename, 60);
+                //$request->file('image')->move($path, $filename);
                 $teacher->image = $filename;
                 $teacher->save();
             }
