@@ -223,7 +223,7 @@
                 </ul>
             </li>
             @endcan
-
+            @can('permissions.index')
             <li class="@yield('openPermission')">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -254,7 +254,7 @@
                     </li>
                 </ul>
             </li>
-
+            @endcan
             @can('courses.index')
             <li class="@yield('openCourses')">
 

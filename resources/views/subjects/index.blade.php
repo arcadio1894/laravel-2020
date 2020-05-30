@@ -59,6 +59,57 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-10">
+                    <h4 class="modal-title" id="exampleModalLabel">Crear Tema</h4>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+            <form method="POST" id="formCreate" data-url="{{ url('subjects/store') }}" enctype="multipart/form-data" >
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label align-right">{{ __('Tema') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control" name="name" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="speciality" class="col-md-4 col-form-label align-right">{{ __('Especialidad') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="speciality" type="text" class="form-control" name="speciality" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="image" class="col-md-4 col-form-label align-right">{{ __('Imagen') }}</label>
+
+                        <div class="col-md-6">
+                            <input type="file" name="image" id="image">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer align-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 
 @endsection
 
