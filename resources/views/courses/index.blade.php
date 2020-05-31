@@ -25,8 +25,10 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
             <div class="panel-heading">Listado de cursos
+
+                    <a href="{{ route('exports.coursesPDF') }}" target="_blank" class="btn btn-mini btn-success pull-right" >Exportar cursos</a>
                 @can('courses.create')
-                <button class="btn btn-mini btn-primary pull-right" id="btnCreate"> Nuevo curso</button>
+                    <button class="btn btn-mini btn-primary pull-right" id="btnCreate"> Nuevo curso</button>
                 @endcan
             </div>
             <div class="panel-body">
@@ -66,6 +68,10 @@
                                     <button data-assign="{{ $course->id }}" data-name="{{ $course->name }}" class="btn btn-sm btn-success" title="Asignar profesores">
                                         <i class="fa fa-users"></i>
                                     </button>
+                                @endcan
+
+                                @can('courses.create')
+                                        <a href="{{ route('exports.coursePDF', $course->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-file-pdf-o"></i></a>
                                 @endcan
                             </td>
                         </tr>

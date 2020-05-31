@@ -113,6 +113,17 @@ Route::middleware('auth')->group(function () {
 
     });
 
+
+    Route::name('exports.')->group(function () {
+
+        Route::get('exports/courses/pdf', 'ExportController@exportCoursesPDF')->name('coursesPDF')
+            ->middleware('permission:courses.create');
+
+        Route::get('exports/course/pdf/{id}', 'ExportController@exportCoursePDF')->name('coursePDF')
+            ->middleware('permission:courses.create');
+    });
+
+
     Route::get('teachers/getAll', 'TeacherController@getAll');
 
     Route::get('teachers/getTeachers/{idCourse}', 'TeacherController@getTeachers');
