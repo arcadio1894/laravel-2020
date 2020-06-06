@@ -23,5 +23,10 @@ class ExportController extends Controller
     public function exportCoursePDF( $id )
     {
         // TODO: Exporta solo un curso específico
+        $course = Course::where('id', $id)->with('teachers')->get();
+        $date = Carbon::now();
+        $vista = view('exports.coursePDF', compact('course', 'date'));
+        $pdf = PDF::loadHTML($vista);
+        return $pdf->stream();
     }
 }

@@ -71,7 +71,7 @@
                                 @endcan
 
                                 @can('courses.create')
-                                        <a href="{{ route('exports.coursePDF', $course->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+                                        <a target="_blank" href="{{ route('exports.coursePDF', $course->id) }}" class="btn btn-sm btn-primary" title="Exportar PDF"><i class="fa fa-file-pdf-o"></i></a>
                                 @endcan
                             </td>
                         </tr>
