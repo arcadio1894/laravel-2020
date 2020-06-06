@@ -25,8 +25,9 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
             <div class="panel-heading">Listado de cursos
-
-                    <a href="{{ route('exports.coursesPDF') }}" target="_blank" class="btn btn-mini btn-success pull-right" >Exportar cursos</a>
+                <a href="{{ route('exports.teachersEXCEL') }}" class="btn btn-mini btn-info pull-right" >EXCEL teachers</a>
+                <a href="{{ route('exports.coursesEXCEL') }}" class="btn btn-mini btn-warning pull-right" >EXCEL cursos</a>
+                <a href="{{ route('exports.coursesPDF') }}" target="_blank" class="btn btn-mini btn-success pull-right" >PDF cursos</a>
                 @can('courses.create')
                     <button class="btn btn-mini btn-primary pull-right" id="btnCreate"> Nuevo curso</button>
                 @endcan
@@ -71,7 +72,11 @@
                                 @endcan
 
                                 @can('courses.create')
-                                        <a target="_blank" href="{{ route('exports.coursePDF', $course->id) }}" class="btn btn-sm btn-primary" title="Exportar PDF"><i class="fa fa-file-pdf-o"></i></a>
+                                    <a href="{{ route('exports.coursePDF', $course->id) }}" class="btn btn-sm btn-primary" title="Exportar PDF"><i class="fa fa-file-pdf-o"></i></a>
+                                @endcan
+
+                                @can('courses.create')
+                                    <a href="{{ route('exports.courseEXCEL', $course->id) }}" class="btn btn-sm btn-info2" title="Exportar EXCEL"><i class="fa fa-file-excel-o"></i></a>
                                 @endcan
                             </td>
                         </tr>

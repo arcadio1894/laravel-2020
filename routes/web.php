@@ -121,6 +121,15 @@ Route::middleware('auth')->group(function () {
 
         Route::get('exports/course/pdf/{id}', 'ExportController@exportCoursePDF')->name('coursePDF')
             ->middleware('permission:courses.create');
+
+        Route::get('exports/courses/excel', 'ExportController@exportCoursesEXCEL')->name('coursesEXCEL')
+            ->middleware('permission:courses.create');
+
+        Route::get('exports/course/excel/{id}', 'ExportController@exportCourseEXCEL')->name('courseEXCEL')
+            ->middleware('permission:courses.create');
+
+        Route::get('exports/teachers/excel', 'ExportController@exportTeachersEXCEL')->name('teachersEXCEL')
+            ->middleware('permission:courses.create');
     });
 
 

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Course;
 
+use App\Exports\CourseExport;
+use App\Exports\TeacherExport;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller
 {
@@ -28,5 +31,15 @@ class ExportController extends Controller
         $vista = view('exports.coursePDF', compact('course', 'date'));
         $pdf = PDF::loadHTML($vista);
         return $pdf->stream();
+    }
+
+    public function exportCoursesEXCEL()
+    {
+        return Excel::download(new CourseExport(), 'cursos.xlsx');
+    }
+
+    public function exportTeachersEXCEL()
+    {
+        return Excel::download(new TeacherExport(), 'profesores.xlsx');
     }
 }
