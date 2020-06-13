@@ -139,6 +139,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('carbon', 'TeacherController@carbon');
 
+    // TODO: Rutas de las paginas de errores
+
+    Route::get('404', 'ErrorController@error404')->name('404');
+    Route::get('405', 'ErrorController@error405')->name('405');
 
 });
 
