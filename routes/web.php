@@ -10,6 +10,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/contact', 'EmailController@getcontact')->name('get_contact');
+Route::post('/contact', 'EmailController@sendcontact')->name('send_contact');
+
 Route::middleware('auth')->group(function () {
 
     // Roles
