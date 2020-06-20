@@ -83,7 +83,7 @@
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" src="{{ asset('dashboard/assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
                         <span class="user-info">
-                            <small>Bienvenido,</small>
+                            <small>{{ Auth::user()->roles[0]->name }},</small>
                             {{ Auth::user()->name }}
                         </span>
                         <i class="ace-icon fa fa-caret-down"></i>

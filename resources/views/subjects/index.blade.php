@@ -85,10 +85,10 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="speciality" class="col-md-4 col-form-label align-right">{{ __('Especialidad') }}</label>
+                        <label for="description" class="col-md-4 col-form-label align-right">{{ __('Descripción') }}</label>
 
                         <div class="col-md-6">
-                            <input id="speciality" type="text" class="form-control" name="speciality" autofocus>
+                            <textarea class="form-control" id="description" name="description" rows="5"></textarea>
                         </div>
                     </div>
 
@@ -114,5 +114,5 @@
 @endsection
 
 @section('scripts')
-    {{--<script src="{{ asset('js/teacher/index.js') }}"></script>--}}
+    <script src="{{ asset('js/subject/index.js') }}"></script>
 @endsection

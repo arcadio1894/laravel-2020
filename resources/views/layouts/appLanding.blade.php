@@ -28,7 +28,11 @@
 
     <link rel="stylesheet" href="{{ asset('landing/css/style.css') }}">
 
-
+    <style>
+        .course{
+            height:200px !important;
+        }
+    </style>
 
 </head>
 
@@ -55,8 +59,26 @@
                     <a href="#" class="small mr-3"><span class="icon-envelope-o mr-2"></span> info@edesce.com</a>
                 </div>
                 <div class="col-lg-3 text-right">
-                    <a href="{{ route('login') }}" class="small mr-3"><span class="icon-unlock-alt"></span> Iniciar sesión</a>
-                    <a href="{{ route('register') }}" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-users"></span> Registro</a>
+                    @if (Route::has('login'))
+                        @auth
+                            <a class="small mr-3" href="{{ url('/home') }}">INTRANET: {{ Auth::user()->name }}</a>
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Cerrar sesión') }} <i class="icon-power-off"></i>
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        @else
+                            <a class="small mr-3" href="{{ route('login') }}"><span class="icon-unlock-alt"></span> Iniciar sesión</a>
+
+                            @if (Route::has('register'))
+                                <a class="small btn btn-primary px-4 py-2 rounded-0" href="{{ route('register') }}"> <span class="icon-users"></span> Registro</a>
+                            @endif
+                        @endauth
+                    @endif
                 </div>
             </div>
         </div>
@@ -79,19 +101,24 @@
                             <li class="has-children">
                                 <a href="{{ url('/') }}" class="nav-link text-left">Acerca de Nosotros</a>
                                 <ul class="dropdown">
-                                    <li><a href="{{ url('/') }}">Nuestros profesores</a></li>
-                                    <li><a href="{{ url('/') }}">Nuestra institución</a></li>
+                                    <li><a href="{{ route('landing.teachers') }}">Nuestros profesores</a></li>
+                                    <li><a href="{{ route('landing.about') }}">Nuestra institución</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ url('/') }}" class="nav-link text-left">Admisiones</a>
+                                <a href="{{ route('landing.admissions') }}" class="nav-link text-left">Admisiones</a>
                             </li>
                             <li>
-                                <a href="{{ url('/') }}" class="nav-link text-left">Cursos</a>
+                                <a href="{{ route('landing.courses') }}" class="nav-link text-left">Cursos</a>
                             </li>
                             <li>
                                 <a href="{{ route('get_contact') }}" class="nav-link text-left">Contacto</a>
                             </li>
+                            @auth
+                                <li>
+                                    <a href="{{ url('/') }}" class="nav-link text-left">Inscripciones</a>
+                                </li>
+                            @endauth
                         </ul>                                                                                                                                                                                                                                                                                          </ul>
                     </nav>
 

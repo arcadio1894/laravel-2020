@@ -213,4 +213,10 @@ class TeacherController extends Controller
 
 
     }
+
+    public function teachers()
+    {
+        $teachers = Teacher::with('courses')->get();
+        return view('teachers.teachers', compact('teachers'));
+    }
 }

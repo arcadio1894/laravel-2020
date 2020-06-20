@@ -7,78 +7,60 @@ use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        dd($request);
+        $validated = $request->validated();
+
+        if (!$request->validator->fails()){
+            // Guardar al usuario
+            $user = User::create([
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'password' => Hash::make('password'),
+            ]);
+            // Guardar el profesor
+            $teacher = Teacher::create([
+                'name' => $request->get('name'),
+                'speciality' => $request->get('speciality'),
+                'years' => $request->get('years'),
+                'country' => $request->get('country'),
+                'phone' => $request->get('phone'),
+                'user_id' => $user->id,
+            ]);
+
+            if (!$request->file('image'))
+            {
+                $teacher->image = 'no_image.jpg';
+            }else{
+                // TODO: Uso de Intervention Image
+                $img = Image::make($request->file('image'));
+                //dd($img);
+                $img->resize(320, 240);
+                $marker = Image::make(public_path().'/images/teachers/watermark.png')->resize(320, 240);
+                $img->insert($marker);
+
+                $path = public_path().'/images/teachers/';
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $filename = $teacher->id . '.' . $extension;
+
+                $img->save($path.$filename, 60);
+                //$request->file('image')->move($path, $filename);
+                $teacher->image = $filename;
+                $teacher->save();
+            }
+
+        }
+
+        return response()->json($request->validator->messages(),200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Subject $subject)
+    public function update(Request $request)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Subject $subject)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Subject $subject)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Subject $subject)
+    public function destroy( $id )
     {
         //
     }

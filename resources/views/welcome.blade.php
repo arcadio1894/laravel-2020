@@ -26,6 +26,11 @@
     <link href="{{ asset('landing/css/jquery.mb.YTPlayer.min.css')}}" media="all" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="{{ asset('landing/css/style.css')}}">
+    <style>
+        .course{
+            height:200px !important;
+        }
+    </style>
 
 </head>
 
@@ -55,6 +60,15 @@
                     @if (Route::has('login'))
                         @auth
                             <a class="small mr-3" href="{{ url('/home') }}">INTRANET: {{ Auth::user()->name }}</a>
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Cerrar sesión') }} <i class="icon-power-off"></i>
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         @else
                             <a class="small mr-3" href="{{ route('login') }}"><span class="icon-unlock-alt"></span> Iniciar sesión</a>
 
@@ -85,19 +99,24 @@
                             <li class="has-children">
                                 <a href="{{ url('/') }}" class="nav-link text-left">Acerca de Nosotros</a>
                                 <ul class="dropdown">
-                                    <li><a href="{{ url('/') }}">Nuestros profesores</a></li>
-                                    <li><a href="{{ url('/') }}">Nuestra institución</a></li>
+                                    <li><a href="{{ route('landing.teachers') }}">Nuestros profesores</a></li>
+                                    <li><a href="{{ route('landing.about') }}">Nuestra institución</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ url('/') }}" class="nav-link text-left">Admisiones</a>
+                                <a href="{{ route('landing.admissions') }}" class="nav-link text-left">Admisiones</a>
                             </li>
                             <li>
-                                <a href="{{ url('/') }}" class="nav-link text-left">Cursos</a>
+                                <a href="{{ route('landing.courses') }}" class="nav-link text-left">Cursos</a>
                             </li>
                             <li>
                                 <a href="{{ route('get_contact') }}" class="nav-link text-left">Contacto</a>
                             </li>
+                            @auth
+                            <li>
+                                <a href="{{ url('/') }}" class="nav-link text-left">Inscripciones</a>
+                            </li>
+                            @endauth
                         </ul>                                                                                                                                                                                                                                                                                          </ul>
                     </nav>
 
@@ -150,7 +169,7 @@
             <div class="row mb-5 justify-content-center text-center">
                 <div class="col-lg-4 mb-5">
                     <h2 class="section-title-underline mb-5">
-                        <span>Why Academics Works</span>
+                        <span>¿Por qué elegirnos?</span>
                     </h2>
                 </div>
             </div>
@@ -162,7 +181,7 @@
                             <span class="flaticon-mortarboard text-white"></span>
                         </div>
                         <div class="feature-1-content">
-                            <h2>Personalize Learning</h2>
+                            <h2>Aprendizaje personalizado</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
                             <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
                         </div>
@@ -174,7 +193,7 @@
                             <span class="flaticon-school-material text-white"></span>
                         </div>
                         <div class="feature-1-content">
-                            <h2>Trusted Courses</h2>
+                            <h2>Cursos interesantes</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
                             <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
                         </div>
@@ -186,7 +205,7 @@
                             <span class="flaticon-library text-white"></span>
                         </div>
                         <div class="feature-1-content">
-                            <h2>Tools for Students</h2>
+                            <h2>Herramientas para Estudiantes</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
                             <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
                         </div>
@@ -204,7 +223,7 @@
             <div class="row mb-5 justify-content-center text-center">
                 <div class="col-lg-6 mb-5">
                     <h2 class="section-title-underline mb-3">
-                        <span>Popular Courses</span>
+                        <span>Cursos Populares</span>
                     </h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, id?</p>
                 </div>
@@ -213,126 +232,57 @@
             <div class="row">
                 <div class="col-12">
                     <div class="owl-slide-3 owl-carousel">
-                        <div class="course-1-item">
+                        @foreach( $courses as $course )
+                            @if ($course->stars >= 4)
+                            <div class="course-1-item">
                             <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{ asset('landing/images/course_1.jpg') }}" alt="Image" class="img-fluid"></a>
-                                <div class="price">$99.00</div>
-                                <div class="category"><h3>Mobile Application</h3></div>
+                                <a href="{{ route('landing.course', $course->id) }}">
+                                    @if ( $course->image == null )
+                                        <img src="{{ asset('images/courses/no_image.jpg') }}"  alt="Image" class="img-fluid course">
+                                    @else
+                                        <img src="{{ asset('images/courses/'.$course->image) }}" height="200px" alt="Image" class="img-fluid course">
+                                    @endif
+                                </a>
+                                <div class="price">{{ $course->price }}</div>
+                                <div class="category"><h3>{{ $course->name }}</h3></div>
                             </figure>
                             <div class="course-1-content pb-4">
-                                <h2>How To Create Mobile Apps Using Ionic</h2>
+                                <h2>{{ substr($course->description, 0,  60) }} ...</h2>
                                 <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
+                                    @switch( $course->stars )
+                                        @case( 1 )
+                                            <span class="icon-star text-warning"></span>
+                                            @break
+                                        @case( 2 )
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            @break
+                                        @case( 3 )
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            @break
+                                        @case( 4 )
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            @break
+                                        @case( 5 )
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            <span class="icon-star text-warning"></span>
+                                            @break
+                                    @endswitch
                                 </div>
-                                <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                                <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
+                                <p class="desc mb-4">{{ substr($course->hours, 0,  20) }}...</p>
+                                <p><a href="{{ route('landing.course', $course->id) }}" class="btn btn-primary rounded-0 px-4">Inscribirse al curso</a></p>
                             </div>
                         </div>
-
-                        <div class="course-1-item">
-                            <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{ asset('landing/images/course_2.jpg') }}" alt="Image" class="img-fluid"></a>
-                                <div class="price">$99.00</div>
-                                <div class="category"><h3>Web Design</h3></div>
-                            </figure>
-                            <div class="course-1-content pb-4">
-                                <h2>How To Create Mobile Apps Using Ionic</h2>
-                                <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                </div>
-                                <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                                <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            </div>
-                        </div>
-
-                        <div class="course-1-item">
-                            <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{ asset('landing/images/course_3.jpg') }}" alt="Image" class="img-fluid"></a>
-                                <div class="price">$99.00</div>
-                                <div class="category"><h3>Arithmetic</h3></div>
-                            </figure>
-                            <div class="course-1-content pb-4">
-                                <h2>How To Create Mobile Apps Using Ionic</h2>
-                                <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                </div>
-                                <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                                <p><a href="courses-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            </div>
-                        </div>
-
-                        <div class="course-1-item">
-                            <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{ asset('landing/images/course_4.jpg') }}" alt="Image" class="img-fluid"></a>
-                                <div class="price">$99.00</div>
-                                <div class="category"><h3>Mobile Application</h3></div>
-                            </figure>
-                            <div class="course-1-content pb-4">
-                                <h2>How To Create Mobile Apps Using Ionic</h2>
-                                <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                </div>
-                                <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                                <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            </div>
-                        </div>
-
-                        <div class="course-1-item">
-                            <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{ asset('landing/images/course_5.jpg') }}" alt="Image" class="img-fluid"></a>
-                                <div class="price">$99.00</div>
-                                <div class="category"><h3>Web Design</h3></div>
-                            </figure>
-                            <div class="course-1-content pb-4">
-                                <h2>How To Create Mobile Apps Using Ionic</h2>
-                                <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                </div>
-                                <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                                <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            </div>
-                        </div>
-
-                        <div class="course-1-item">
-                            <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{ asset('landing/images/course_6.jpg') }}" alt="Image" class="img-fluid"></a>
-                                <div class="price">$99.00</div>
-                                <div class="category"><h3>Mobile Application</h3></div>
-                            </figure>
-                            <div class="course-1-content pb-4">
-                                <h2>How To Create Mobile Apps Using Ionic</h2>
-                                <div class="rating text-center mb-3">
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                    <span class="icon-star2 text-warning"></span>
-                                </div>
-                                <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                                <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            </div>
-                        </div>
-
+                            @endif
+                        @endforeach
                     </div>
 
                 </div>
@@ -582,7 +532,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="footer">
         <div class="container">

@@ -205,4 +205,27 @@ class CourseController extends Controller
         //dd($course);
         return view('subjects.index', compact('course'));
     }
+
+    public function courseAll()
+    {
+        $courses = Course::all();
+        return view('courses.courses', compact('courses'));
+    }
+
+    public function courseDetails($id)
+    {
+        $course = Course::where('id', $id)->with('subjects')->with('teachers')->first();
+        //dd($course);
+        return view('courses.detail', compact('course'));
+    }
+
+    public function admissions()
+    {
+        return view('admissions.admissions');
+    }
+
+    public function about()
+    {
+        return view('admissions.about');
+    }
 }

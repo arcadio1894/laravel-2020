@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $courses = \App\Course::all();
+    return view('welcome', compact('courses'));
 });
 
 Auth::routes();
@@ -116,7 +117,6 @@ Route::middleware('auth')->group(function () {
 
     });
 
-
     Route::name('exports.')->group(function () {
 
         Route::get('exports/courses/pdf', 'ExportController@exportCoursesPDF')->name('coursesPDF')
@@ -135,6 +135,16 @@ Route::middleware('auth')->group(function () {
             ->middleware('permission:courses.create');
     });
 
+    Route::name('subjects.')->group(function () {
+
+        Route::post('subjects/store', 'SubjectController@store')->name('store')
+            ->middleware('permission:courses.create');
+
+        Route::post('subjects/delete/{id}', 'SubjectController@destroy')->name('delete')
+            ->middleware('permission:courses.create');
+    });
+
+
 
     Route::get('teachers/getAll', 'TeacherController@getAll');
 
@@ -147,5 +157,14 @@ Route::middleware('auth')->group(function () {
     Route::get('404', 'ErrorController@error404')->name('404');
     Route::get('405', 'ErrorController@error405')->name('405');
 
+});
+
+Route::name('landing.')->group(function () {
+
+    Route::get('course/details/{id}', 'CourseController@courseDetails')->name('course');
+    Route::get('course/all/', 'CourseController@courseAll')->name('courses');
+    Route::get('admissions', 'CourseController@admissions')->name('admissions');
+    Route::get('about', 'CourseController@about')->name('about');
+    Route::get('teacher/all', 'TeacherController@teachers')->name('teachers');
 });
 
