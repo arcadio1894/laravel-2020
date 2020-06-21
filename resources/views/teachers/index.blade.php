@@ -59,6 +59,11 @@
                                     <i class="ace-icon fa fa-trash"></i>
                                 </button>
                                 @endcan
+                                @can('teachers.destroy')
+                                <button data-email="{{ $teacher->id }}" class="btn btn-sm btn-success" title="Enviar temario">
+                                    <i class="ace-icon fa fa-mail-forward"></i>
+                                </button>
+                                @endcan
                             </td>
                         </tr>
                         @endforeach
@@ -96,6 +101,48 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-10">
+                    <h4 class="modal-title" id="exampleModalLabel">Adjuntar archivo</h4>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+            <form method="POST" id="formEmail" data-url="{{ route('teachers.email') }}" >
+                @csrf
+                <div class="modal-body" id="bodyEmail">
+                    <input type="hidden" name="teacher_id" id="teacher_id">
+                    <div class="form-group row">
+                        <label for="mensaje" class="col-md-4 col-form-label align-right">{{ __('Mensaje:') }}</label>
+
+                        <div class="col-md-6">
+                            <textarea class="form-control" name="mensaje" id="mensaje" cols="10" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="image" class="col-md-4 col-form-label align-right">{{ __('Archivo Adjunto') }}</label>
+
+                        <div class="col-md-6">
+                            <input type="file" name="archivo" id="archivo">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,9 +161,8 @@
                 @csrf
                 {{ method_field('DELETE') }}
                 <div class="modal-body" id="bodyDelete">
-                    <input type="hidden" name="id" id="courseDelete">
-                    <h4>¿Esta seguro de eliminar el siguiente curso?</h4>
-                    <h4 id="showName"></h4>
+                    <input type="hidden" name="id" id="id">
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

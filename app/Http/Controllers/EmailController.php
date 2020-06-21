@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EmailTeacherSent;
 use App\Mail\MessageContactSent;
+use App\Teacher;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class EmailController extends Controller
 {
@@ -25,5 +30,34 @@ class EmailController extends Controller
 
         Mail::to('mailpruebacursophp@gmail.com')
             ->send(new MessageContactSent($fullname, $email, $tel, $message));
+        return Redirect::to('/');
     }
+
+    public function sendEmailTeacher( Request $request ){
+        //dd( $request );
+        $rules = array(
+            'mensaje' => 'string|max:255',
+        );
+        $mensajes = array(
+            'mensaje.string' => 'El mensaje debe contener solo caracteres',
+            'mensaje.max' => 'El mensaje debe contener 255 caracteres como maximo',
+
+        );
+        $mensaje = $request->get('mensaje');
+        $teacher = Teacher::where('id',$request->get('teacher_id'))->first();
+        $user = User::where('id',$teacher->user_id)->first();
+        //dd($user);
+        $path = public_path().'/pdfs/';
+        $extension = $request->file('archivo')->getClientOriginalExtension();
+        $filename = $teacher->id . '.' . $extension;
+        $request->file('archivo')->move($path, $filename);
+
+        $validator = Validator::make($request->all(), $rules, $mensajes);
+
+        Mail::to($user->email)
+            ->send(new EmailTeacherSent($user, $teacher, $filename, $mensaje));
+
+        return response()->json($validator->messages(),200);
+    }
+
 }

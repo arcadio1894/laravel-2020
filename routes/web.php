@@ -115,6 +115,9 @@ Route::middleware('auth')->group(function () {
         Route::get('teachers/showCourse', 'TeacherController@showCourse')->name('showCourse')
             ->middleware('permission:teacher.showCourse');
 
+        Route::post('teachers/sendEmail', 'EmailController@sendEmailTeacher')->name('email')
+            ->middleware('permission:teacher.destroy');
+
     });
 
     Route::name('exports.')->group(function () {

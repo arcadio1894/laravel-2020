@@ -11,22 +11,22 @@ class MessageContactSent extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $fullname;
-    public $email;
-    public $tel;
-    public $mensaje;
+    private $fullname;
+    private $email;
+    private $tel;
+    private $mensaje;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct( $fullname, $email, $tel, $message )
+    public function __construct( $fullname, $email, $tel, $mensaje )
     {
         $this->fullname = $fullname;
         $this->email = $email;
         $this->tel = $tel;
-        $this->mensaje = $message;
+        $this->mensaje = $mensaje;
     }
 
     /**
@@ -36,6 +36,17 @@ class MessageContactSent extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.contact');
+        return $this->view('mails.contact')
+            ->subject('Correo de contacto')
+            ->attach(public_path().'/pdfs/diplomado-laravel FINAL.pdf', [
+                'as' => 'brochure.pdf',
+                'mime' => 'application/pdf',
+            ])
+            ->with([
+                'fullname' => $this->fullname,
+                'email' => $this->email,
+                'tel' => $this->tel,
+                'mensaje' => $this->mensaje,
+            ]);
     }
 }
