@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\CourseCreated;
+use App\Events\CourseDeleted;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,4 +31,9 @@ class Course extends Model
     }
 
     protected $dates = ['delete_at'];
+
+    protected $dispatchesEvents = [
+        'created' => CourseCreated::class,
+        'deleted' => CourseDeleted::class,
+    ];
 }

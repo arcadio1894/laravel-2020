@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\TeacherObserver;
+use App\Teacher;
 use Illuminate\Support\ServiceProvider;
 //Illuminate\Support\Facades\Schema
 
@@ -25,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //Schema::defaultStringLength(191);
+        Teacher::observe(TeacherObserver::class);
     }
 }

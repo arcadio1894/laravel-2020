@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\CourseTeacher;
+use App\Events\CourseAssigned;
 use App\Subject;
+use App\Teacher;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -192,6 +195,17 @@ class CourseController extends Controller
                     'course_id' => $request->get('id'),
                     'teacher_id' => $teacher
                 ]);
+
+                // Teacher
+                $teacher2 = Teacher::where('id', $teacher)->first();
+
+                // User
+                $user = User::where('id', $teacher2->user_id)->first();
+
+                // Course
+                $course = Course::where('id', $request->get('id'))->first();
+
+                event(new CourseAssigned($course, $user, $teacher2));
             }
 
         }
