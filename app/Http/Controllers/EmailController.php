@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CourseEnrolled;
 use App\Mail\EmailTeacherSent;
 use App\Mail\MessageContactSent;
 use App\Teacher;
@@ -58,6 +59,17 @@ class EmailController extends Controller
             ->send(new EmailTeacherSent($user, $teacher, $filename, $mensaje));
 
         return response()->json($validator->messages(),200);
+    }
+
+    public function sendCourseEnrolled()
+    {
+        $mensaje = 'Hicimos una transmision';
+        event( new CourseEnrolled($mensaje));
+    }
+
+    public function listenCourseEnrolled()
+    {
+        return view('mails.listenEnrolled');
     }
 
 }

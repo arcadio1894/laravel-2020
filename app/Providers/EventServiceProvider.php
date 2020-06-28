@@ -27,6 +27,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CourseDeleted' => [
             'App\Listeners\SendCourseDeletedNotification',
         ],
+
+        'App\Events\CourseEnrolled' => [
+            'App\Listeners\SendCourseEnrolledNotification',
+        ],
     ];
 
     /**

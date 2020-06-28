@@ -337,7 +337,7 @@
         </div>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" id="app">
         <div class="main-content-inner">
             @yield('breadcrumbs')
 
@@ -413,6 +413,13 @@
 
 <!-- inline scripts related to this page -->
 <script src="{{ asset('toast/jquery.toast.min.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+    Echo.private('course-enrolled')
+        .listen('CourseEnrolled', (e) => {
+            alert(e.mensaje);
+        });
+</script>
 @yield('scripts')
 </body>
 </html>

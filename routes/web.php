@@ -160,6 +160,9 @@ Route::middleware('auth')->group(function () {
     Route::get('404', 'ErrorController@error404')->name('404');
     Route::get('405', 'ErrorController@error405')->name('405');
 
+    Route::get('send/courseEnrolled', 'EmailController@sendCourseEnrolled')->name('send.course.enrolled');
+    Route::get('listen/courseEnrolled', 'EmailController@listenCourseEnrolled')->name('listen.course.enrolled');
+
 });
 
 Route::name('landing.')->group(function () {
