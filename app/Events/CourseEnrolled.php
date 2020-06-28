@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Course;
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,16 +16,18 @@ class CourseEnrolled implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $mensaje;
+    public $course;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct( $mensaje )
+    public function __construct( Course $course, User $user )
     {
-        $this->mensaje = $mensaje;
+        $this->course = $course;
+        $this->user = $user;
     }
 
     /**

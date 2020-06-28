@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Events\CourseEnrolled;
 use App\Mail\EmailTeacherSent;
 use App\Mail\MessageContactSent;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -61,10 +63,14 @@ class EmailController extends Controller
         return response()->json($validator->messages(),200);
     }
 
-    public function sendCourseEnrolled()
+    public function sendCourseEnrolled($course_id)
     {
-        $mensaje = 'Hicimos una transmision';
-        event( new CourseEnrolled($mensaje));
+        $course = Course::where('id', $course_id)->first();
+        $user = User::where('id', Auth::user()->id)->first();
+        //dd($user);
+        event( new CourseEnrolled($course, $user));
+
+        return redirect()->route('landing.courses');
     }
 
     public function listenCourseEnrolled()

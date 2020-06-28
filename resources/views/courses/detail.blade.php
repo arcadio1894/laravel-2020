@@ -59,7 +59,7 @@
                 </ul>
 
                 <p>
-                    <a href="#" class="btn btn-primary rounded-0 btn-lg px-5">Inscribirse</a>
+                    <a href="{{ route('send.course.enrolled', $course->id ) }}" class="btn btn-primary rounded-0 btn-lg px-5">Inscribirse</a>
                 </p>
 
             </div>

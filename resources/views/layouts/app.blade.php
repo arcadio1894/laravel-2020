@@ -390,6 +390,7 @@
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
 </div><!-- /.main-container -->
+<script src="{{ asset('js/app.js') }}"></script>
 
 <!-- basic scripts -->
 <script src="{{ asset('dashboard/assets/js/jquery-2.1.4.min.js') }}"></script>
@@ -412,12 +413,25 @@
 <script src="{{ asset('dashboard/assets/js/ace.min.js') }}"></script>
 
 <!-- inline scripts related to this page -->
+
 <script src="{{ asset('toast/jquery.toast.min.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
 <script>
     Echo.private('course-enrolled')
         .listen('CourseEnrolled', (e) => {
-            alert(e.mensaje);
+            var texto = 'El usuario '+e.user.name+' se ha inscrito en el curso '+e.course.name;
+            $.toast({
+                text : texto,
+                showHideTransition : 'slide',
+                bgColor : '#629B58',
+                textColor : '#eee',
+                allowToastClose : false,
+                hideAfter : 6000,
+                stack : 10,
+                textAlign : 'left',
+                position : 'top-right',
+                icon: 'success',
+                heading: 'Nueva inscripcion'
+            });
         });
 </script>
 @yield('scripts')
