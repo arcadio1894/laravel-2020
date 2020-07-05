@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $courses = \App\Course::all();
     return view('welcome', compact('courses'));
-});
+
+})->name('/');
 
 Auth::routes();
 

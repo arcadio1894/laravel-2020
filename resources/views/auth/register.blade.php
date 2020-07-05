@@ -54,7 +54,7 @@
                             <div class="col-md-6">
                                 <input id="job" type="text" class="form-control @error('job') is-invalid @enderror" name="job" value="{{ old('job') }}" required autocomplete="job">
 
-                                @error('name')
+                                @error('job')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

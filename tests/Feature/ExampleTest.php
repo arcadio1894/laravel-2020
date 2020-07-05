@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Course;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +15,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
+        $courses = Course::all();
+        $response = $this->get(route('/'), [$courses]);
 
         $response->assertStatus(200);
     }

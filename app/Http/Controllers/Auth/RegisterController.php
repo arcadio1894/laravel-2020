@@ -81,6 +81,8 @@ class RegisterController extends Controller
             'user_id' => $user->id,
         ]);
 
+        $user->roles()->sync(['3']);
+
         return $user;
 
     }
