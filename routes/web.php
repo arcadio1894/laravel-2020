@@ -162,6 +162,11 @@ Route::middleware('auth')->group(function () {
     Route::get('send/courseEnrolled/{course_id}', 'EmailController@sendCourseEnrolled')->name('send.course.enrolled');
     Route::get('listen/courseEnrolled', 'EmailController@listenCourseEnrolled')->name('listen.course.enrolled');
 
+    // TODO: Rutas de vue
+    Route::get('/comments/{course_id}', 'CommentController@index');
+    Route::post('/comments', 'CommentController@store');
+    Route::put('/comment/{comment_id}', 'CommentController@update');
+    Route::delete('/comment/{comment_id}', 'CommentController@destroy');
 });
 
 Route::name('landing.')->group(function () {
@@ -172,4 +177,8 @@ Route::name('landing.')->group(function () {
     Route::get('about', 'CourseController@about')->name('about');
     Route::get('teacher/all', 'TeacherController@teachers')->name('teachers');
 });
+
+// TODO: Lazy loading and Eager Loading
+Route::get('lazy/loading', 'ErrorController@lazy');
+Route::get('eager/loading', 'ErrorController@eager');
 

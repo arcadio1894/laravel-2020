@@ -36,4 +36,9 @@ class Course extends Model
         'created' => CourseCreated::class,
         'deleted' => CourseDeleted::class,
     ];
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }

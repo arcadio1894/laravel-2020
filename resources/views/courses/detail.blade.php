@@ -63,6 +63,14 @@
                 </p>
 
             </div>
+            <div class="col-md-12 align-self-center">
+                <h2 class="section-title-underline mb-2">
+                    <span>Comentarios</span>
+                </h2>
+            </div>
+
+            <my-comments-component v-bind:course_id="{{ json_encode( $course->id ) }}"></my-comments-component>
+
         </div>
     </div>
 @endsection
